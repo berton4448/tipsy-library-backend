@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
- 
+
 const auth = require('./middleware/auth');
 
 // --- 引入新套件 ---
@@ -13,6 +13,8 @@ const jwt = require('jsonwebtoken'); // 產生 Token 用的
 const { OAuth2Client } = require('google-auth-library');
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const rateLimit = require('express-rate-limit'); // 防駭限流
+const crypto = require('crypto'); // 產生隨機 Token 用的
+const nodemailer = require('nodemailer'); // 寄發 Email 用的
 /* const mongoSanitize = require('express-mongo-sanitize'); // 先暫時關閉避免報錯 */
 
 // --- 引入 User 模型 ---
@@ -70,8 +72,8 @@ app.post('/api/register', async (req, res) => {
 
         // 發放 Token
         const token = jwt.sign(
-            { id: newUser._id }, 
-            process.env.JWT_SECRET || 'secret123', 
+            { id: newUser._id },
+            process.env.JWT_SECRET || 'secret123',
             { expiresIn: '1d' }
         );
 
@@ -114,8 +116,8 @@ app.post('/api/login', async (req, res) => {
 
         // 檢查是否被鎖定 (防駭)
         if (user.lockUntil && user.lockUntil > Date.now()) {
-            return res.status(403).json({ 
-                message: '帳號暫時鎖定中，請 15 分鐘後再試' 
+            return res.status(403).json({
+                message: '帳號暫時鎖定中，請 15 分鐘後再試'
             });
         }
 
@@ -125,7 +127,7 @@ app.post('/api/login', async (req, res) => {
         if (!isMatch) {
             // 密碼錯 -> 增加錯誤次數
             user.loginAttempts += 1;
-            
+
             // 連錯 5 次鎖定
             if (user.loginAttempts >= 5) {
                 user.lockUntil = Date.now() + 15 * 60 * 1000; // 鎖 15 分鐘
@@ -144,8 +146,8 @@ app.post('/api/login', async (req, res) => {
 
         // 發放 Token
         const token = jwt.sign(
-            { id: user._id }, 
-            process.env.JWT_SECRET || 'secret123', 
+            { id: user._id },
+            process.env.JWT_SECRET || 'secret123',
             { expiresIn: '1d' }
         );
 
@@ -203,8 +205,8 @@ app.post('/api/google-login', async (req, res) => {
 
         // 5. 發放我們自己的微醺 Token
         const jwtToken = jwt.sign(
-            { id: user._id }, 
-            process.env.JWT_SECRET || 'secret123', 
+            { id: user._id },
+            process.env.JWT_SECRET || 'secret123',
             { expiresIn: '1d' }
         );
 
@@ -224,6 +226,112 @@ app.post('/api/google-login', async (req, res) => {
     } catch (error) {
         console.error("Google 登入錯誤:", error);
         res.status(401).json({ message: 'Google 驗證失敗' });
+    }
+});
+
+
+// 2.6 [忘記密碼 API] POST /api/forgot-password
+app.post('/api/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ message: '請輸入 Email' });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: '找不到此 Email 的使用者' });
+        }
+
+        // 產生隨機 Token
+        const resetToken = crypto.randomBytes(20).toString('hex');
+
+        // 加密存入資料庫
+        user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+        user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 分鐘後過期
+
+        // 由於可能有些必填欄位在註冊時沒填(例如 googleId 註冊的使用者沒有密碼)，使用 validateBeforeSave: false 跳過驗證
+        await user.save({ validateBeforeSave: false });
+
+        // 設定 nodemailer
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        // 寄送 Email (包含指向重設密碼頁面的連結)
+        const clientUrl = process.env.CLIENT_URL || 'http://127.0.0.1:5500'; // 前端網址，如果有部署請在 .env 修改
+        const resetUrl = `${clientUrl}/reset-password.html?token=${resetToken}`;
+
+        const message = `
+            <h2>重設密碼要求</h2>
+            <p>您收到這封信是因為有人要求重設您的密碼。</p>
+            <p>請點擊下方按鈕以重設密碼 (連結 10 分鐘內有效):</p>
+            <a href="${resetUrl}" style="background-color: #d4af37; color: #000; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px;">重設密碼</a>
+            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">如果按鈕無法點擊，請複製並貼上以下網址：<br>${resetUrl}</p>
+        `;
+
+        await transporter.sendMail({
+            from: `"微醺圖書館" <${process.env.EMAIL_USER}>`,
+            to: user.email,
+            subject: '微醺圖書館 - 密碼重設連結',
+            html: message
+        });
+
+        res.status(200).json({ success: true, message: '重設信件已寄出，請至信箱檢查' });
+    } catch (error) {
+        console.error("忘記密碼錯誤:", error);
+
+        // 如果錯誤發生，把剛才設定的 token 清掉
+        if (req.body.email) {
+            const user = await User.findOne({ email: req.body.email });
+            if (user) {
+                user.resetPasswordToken = undefined;
+                user.resetPasswordExpire = undefined;
+                await user.save({ validateBeforeSave: false });
+            }
+        }
+        res.status(500).json({ message: 'Email 寄送失敗，系統錯誤' });
+    }
+});
+
+// 2.7 [重設密碼 API] PATCH /api/reset-password/:token
+app.patch('/api/reset-password/:token', async (req, res) => {
+    try {
+        // 將 URL 取得的 token 加密回原本存入資料庫的樣子，來找人
+        const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
+        // 找尋 Token 相符且尚未過期的使用者
+        const user = await User.findOne({
+            resetPasswordToken,
+            resetPasswordExpire: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            return res.status(400).json({ message: 'Token 無效或已過期' });
+        }
+
+        const { password } = req.body;
+        if (!password) {
+            return res.status(400).json({ message: '請輸入新密碼' });
+        }
+
+        // 加密新密碼
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+
+        // 清除 Token
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save();
+
+        res.status(200).json({ success: true, message: '密碼重設成功，請重新登入' });
+    } catch (error) {
+        console.error("重設密碼錯誤:", error);
+        res.status(500).json({ message: '系統錯誤' });
     }
 });
 
@@ -306,19 +414,19 @@ app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
             // A. 如果已經收藏 -> 移除 (Filter 掉不要的)
             user.favorites = user.favorites.filter(id => id.toString() !== cocktailId);
             await user.save();
-            return res.status(200).json({ 
-                success: true, 
-                message: '已移除收藏', 
-                favorites: user.favorites 
+            return res.status(200).json({
+                success: true,
+                message: '已移除收藏',
+                favorites: user.favorites
             });
         } else {
             // B. 如果還沒收藏 -> 加入 (Push 進去)
             user.favorites.push(cocktailId);
             await user.save();
-            return res.status(200).json({ 
-                success: true, 
-                message: '已加入收藏 ❤️', 
-                favorites: user.favorites 
+            return res.status(200).json({
+                success: true,
+                message: '已加入收藏 ❤️',
+                favorites: user.favorites
             });
         }
 

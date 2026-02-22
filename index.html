@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +10,15 @@
     <link rel="icon" href="https://en.pimg.jp/107/565/261/1/107565261.jpg" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-   <style>
-        
+    <style>
         /* CSS 1 (全域變數與基礎設定：定義顏色變數與字體) */
         :root {
-            --黑色: #121212; 
-            --卡片背景色: #1e1e1e;    
-            --奢華金色: #c5a059;    
-            --次要文字色: #a0a0a0;  
+            --黑色: #121212;
+            --卡片背景色: #1e1e1e;
+            --奢華金色: #c5a059;
+            --次要文字色: #a0a0a0;
 
-            --奢華金: #D4AF37; 
+            --奢華金: #D4AF37;
             --深色背景: #1A1A1A;
         }
 
@@ -29,75 +29,123 @@
         }
 
         /* CSS 2 (側邊欄漢堡按鈕與容器樣式：毛玻璃效果) */
-                /* 側邊攔與登入 */
-        
-          
+        /* 側邊攔與登入 */
+
+
         /* 按鈕固定在右上角 */
 
 
-/* 漢堡按鈕樣式 */
-.漢堡按鈕 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--奢華金);
-  background: rgba(26, 26, 26, 0.6);
-  backdrop-filter: blur(5px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+        /* 漢堡按鈕樣式 */
+        .漢堡按鈕 {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--奢華金);
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.漢堡圖示 { font-size: 1.8rem; color: var(--奢華金); }
+        .漢堡圖示 {
+            font-size: 1.8rem;
+            color: var(--奢華金);
+        }
 
-/* 側邊欄本體樣式 */
-.微醺側邊欄容器 {
-  background-color: rgba(26, 26, 26, 0.8) !important;
-  backdrop-filter: blur(15px); /* 毛玻璃核心 */
-  border-right: 1px solid var(--奢華金);
-}
+        /* 側邊欄本體樣式 */
+        .微醺側邊欄容器 {
+            background-color: rgba(26, 26, 26, 0.8) !important;
+            backdrop-filter: blur(15px);
+            /* 毛玻璃核心 */
+            border-right: 1px solid var(--奢華金);
+        }
 
-/* CSS 3 (通用元件樣式：文字顏色、按鈕、輸入框) */
-/* 其他小工具 class */
-.金色文字 { color: var(--奢華金); }
-.白色文字 { color: #fff; text-decoration: none; }
-.白色透明文字 { color: rgba(255, 255, 255, 0.5); }
-.底部金色邊框 { border-bottom: 1px solid var(--奢華金) !important; }
-.奢華金填滿按鈕 { background-color: var(--奢華金); color: #000; font-weight: bold; border: none; }
-.毛玻璃輸入框 { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); color: #fff; }
-.底部間距 { margin-bottom: 3rem; }
-.底部小間距 { margin-bottom: 1rem; }
-.寬度百分百 { width: 100%; }
-.導覽列表 { list-style: none; padding: 0; }
-.金色文字 {
-  font-size: 1.4rem !important; /* 增加歡迎標題的大小 */
-  letter-spacing: 2px;           /* 增加字間距，更有高級感 */
-}
+        /* CSS 3 (通用元件樣式：文字顏色、按鈕、輸入框) */
+        /* 其他小工具 class */
+        .金色文字 {
+            color: var(--奢華金);
+        }
+
+        .白色文字 {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .白色透明文字 {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .底部金色邊框 {
+            border-bottom: 1px solid var(--奢華金) !important;
+        }
+
+        .奢華金填滿按鈕 {
+            background-color: var(--奢華金);
+            color: #000;
+            font-weight: bold;
+            border: none;
+        }
+
+        .毛玻璃輸入框 {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #fff;
+        }
+
+        .底部間距 {
+            margin-bottom: 3rem;
+        }
+
+        .底部小間距 {
+            margin-bottom: 1rem;
+        }
+
+        .寬度百分百 {
+            width: 100%;
+        }
+
+        .導覽列表 {
+            list-style: none;
+            padding: 0;
+        }
+
+        .金色文字 {
+            font-size: 1.4rem !important;
+            /* 增加歡迎標題的大小 */
+            letter-spacing: 2px;
+            /* 增加字間距，更有高級感 */
+        }
 
 
 
-/* 解決字太小與間距問題 */
-.導覽連結 {
-  font-size: 1.25rem !important; /* 把字放大 */
-  padding: 12px 0;                /* 增加上下間距，比較好點擊 */
-  display: block;                 /* 讓點擊範圍變大 */
-  transition: 0.3s;
-}
+        /* 解決字太小與間距問題 */
+        .導覽連結 {
+            font-size: 1.25rem !important;
+            /* 把字放大 */
+            padding: 12px 0;
+            /* 增加上下間距，比較好點擊 */
+            display: block;
+            /* 讓點擊範圍變大 */
+            transition: 0.3s;
+        }
 
-.導覽連結:hover {
-  color: var(--奢華金) !important; /* 滑鼠移上去變金色，增加高級感 */
-  padding-left: 10px;            /* 移入時輕微向右位移 */
-}
+        .導覽連結:hover {
+            color: var(--奢華金) !important;
+            /* 滑鼠移上去變金色，增加高級感 */
+            padding-left: 10px;
+            /* 移入時輕微向右位移 */
+        }
 
-/* 讓登入區塊看起來更像專門的區塊 */
-.會員登入區 {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.1);
-}
+        /* 讓登入區塊看起來更像專門的區塊 */
+        .會員登入區 {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
 
 
         /* CSS 4 (頂部導覽列與篩選器樣式) */
@@ -105,7 +153,8 @@
         /* 導覽列與篩選器 */
 
 
-        .頂部篩選列 { /* 原 .filter-bar */
+        .頂部篩選列 {
+            /* 原 .filter-bar */
             background: rgba(30, 30, 30, 0.8);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -115,7 +164,7 @@
             z-index: 100;
         }
 
-        .form-select { 
+        .form-select {
             background-color: #2c2c2c;
             border: 1px solid #444;
             color: #fff;
@@ -131,7 +180,8 @@
 
         /* CSS 5 (酒卡設計：圖片 hover 效果與排版) */
         /* 酒卡設計 */
-        .特調酒卡 { /* 原 .cocktail-card */
+        .特調酒卡 {
+            /* 原 .cocktail-card */
             background-color: var(--卡片背景色);
             border: none;
             transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
@@ -145,7 +195,8 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .card-img-top { /* Bootstrap 圖片類別 */
+        .card-img-top {
+            /* Bootstrap 圖片類別 */
             height: 250px;
             object-fit: cover;
             filter: brightness(0.8);
@@ -167,7 +218,8 @@
             margin-bottom: 5px;
         }
 
-        .卡片資訊小字 { /* 原 .card-meta */
+        .卡片資訊小字 {
+            /* 原 .card-meta */
             font-size: 0.85rem;
             color: var(--次要文字色);
             letter-spacing: 1px;
@@ -185,7 +237,7 @@
         .modal-header {
             border-bottom: 1px solid #333;
         }
-        
+
         .modal-footer {
             border-top: 1px solid #333;
         }
@@ -195,7 +247,8 @@
             font-weight: 700;
         }
 
-        .彈窗大圖 { /* 原 .modal-img */
+        .彈窗大圖 {
+            /* 原 .modal-img */
             width: 100%;
             height: 300px;
             object-fit: cover;
@@ -203,7 +256,8 @@
             margin-bottom: 20px;
         }
 
-        .故事內文 { /* 原 .story-text */
+        .故事內文 {
+            /* 原 .story-text */
             font-size: 1rem;
             line-height: 1.8;
             color: #d1d1d1;
@@ -213,7 +267,8 @@
             padding-left: 15px;
         }
 
-        .自訂標籤 { /* 原 .badge-custom */
+        .自訂標籤 {
+            /* 原 .badge-custom */
             background-color: rgba(197, 160, 89, 0.1);
             color: var(--奢華金色);
             border: 1px solid var(--奢華金色);
@@ -222,613 +277,734 @@
         }
 
         /* RWD 微調 */
-@media (min-width: 768px) {
-    /* 只針對 ID 是 #詳情彈窗 的 modal-body 做左右排版 */
-    #詳情彈窗 .modal-body {
-        display: flex;
-        gap: 30px;
-    }
-    
-    .彈窗大圖 {
-        width: 45%;
-        height: auto;
-        margin-bottom: 0;
-    }
-    .彈窗右側資訊 {
-        width: 55%;
-    }
-}
+        @media (min-width: 768px) {
+
+            /* 只針對 ID 是 #詳情彈窗 的 modal-body 做左右排版 */
+            #詳情彈窗 .modal-body {
+                display: flex;
+                gap: 30px;
+            }
+
+            .彈窗大圖 {
+                width: 45%;
+                height: auto;
+                margin-bottom: 0;
+            }
+
+            .彈窗右側資訊 {
+                width: 55%;
+            }
+        }
 
 
         /* CSS 7 (頁尾 Footer 設計：排版與連結樣式) */
         /* 頁尾CSS 內容 */
-        
-.頁尾容器 {
-    background-color: #0a0a0a; /* 比背景更深一點的黑 */
-    border-top: 1px solid rgba(197, 160, 89, 0.2); /* 金色半透明邊框 */
-    padding: 60px 0 30px;
-    margin-top: 80px;
-}
 
-.頁尾標題 {
-    color: var(--奢華金色);
-    font-weight: 700;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
-}
+        .頁尾容器 {
+            background-color: #0a0a0a;
+            /* 比背景更深一點的黑 */
+            border-top: 1px solid rgba(197, 160, 89, 0.2);
+            /* 金色半透明邊框 */
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
 
-.頁尾文字 {
-    color: var(--次要文字色);
-    font-size: 0.95rem;
-    line-height: 1.8;
-}
+        .頁尾標題 {
+            color: var(--奢華金色);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
 
-.頁尾連結 {
-    color: #f5f5f7;
-    text-decoration: none;
-    font-size: 0.9rem;
-    display: block;
-    margin-bottom: 10px;
-    transition: color 0.3s;
-}
+        .頁尾文字 {
+            color: var(--次要文字色);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
 
-.頁尾連結:hover {
-    color: var(--奢華金色);
-}
+        .頁尾連結 {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
 
-.頁尾警語 {
-    background-color: #c5a059;
-    color: #121212;
-    padding: 5px 10px;
-    display: inline-block;
-    font-weight: bold;
-    font-size: 0.8rem;
-}
+        .頁尾連結:hover {
+            color: var(--奢華金色);
+        }
 
-/* 響應式微調 */
-@media (max-width: 768px) {
-    .頁尾容器 {
-        text-align: center;
-    }
-    .頁尾警語 {
-        margin-top: 10px;
-    }
-}
+        .頁尾警語 {
+            background-color: #c5a059;
+            color: #121212;
+            padding: 5px 10px;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
 
-/* CSS 8 (互動元件：愛心按鈕、通知框、導覽箭頭) */
-/* --- 新增：愛心收藏與通知樣式 --- */
+        /* 響應式微調 */
+        @media (max-width: 768px) {
+            .頁尾容器 {
+                text-align: center;
+            }
 
-/* --- 修正彈窗排版與愛心樣式 --- */
-.愛心按鈕 {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: 0.3s;
-}
-.愛心按鈕:hover { background: rgba(0,0,0,0.8); transform: scale(1.1); }
-.已收藏 .愛心圖示 { color: #ff4757; }
-.愛心圖示 { color: white; font-size: 1.2rem; }
+            .頁尾警語 {
+                margin-top: 10px;
+            }
+        }
 
-/* 通知框 */
-#通知框 {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    background: rgba(20, 20, 20, 0.95); color: #fff; padding: 15px 30px;
-    border-radius: 50px; border: 1px solid #c5a059; z-index: 9999;
-    pointer-events: none; opacity: 0; transition: opacity 0.3s;
-}
+        /* CSS 8 (互動元件：愛心按鈕、通知框、導覽箭頭) */
+        /* --- 新增：愛心收藏與通知樣式 --- */
 
-/* 關鍵修正：讓包了愛心的圖片容器，在電腦版也能維持 45% 的寬度 */
-.img-container { width: 100%; position: relative; }
-@media (min-width: 768px) {
-    #詳情彈窗 .modal-body .img-container { width: 45%; }
-    #詳情彈窗 .modal-body .img-container img { width: 100%; }
-}
+        /* --- 修正彈窗排版與愛心樣式 --- */
+        .愛心按鈕 {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
 
-/* 讓彈窗底部的線條變成深色，才不會有一條白線很突兀 */
-.modal-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    justify-content: center; /* 按鈕置中 */
-}
+        .愛心按鈕:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
 
-/* 導覽按鈕基本樣式 */
-.導覽箭頭 {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    z-index: 1060; /* 確保在 Modal 之上 */
-}
+        .已收藏 .愛心圖示 {
+            color: #ff4757;
+        }
 
-.導覽箭頭:hover {
-    background: var(--奢華金);
-    color: black;
-    border-color: var(--奢華金);
-}
+        .愛心圖示 {
+            color: white;
+            font-size: 1.2rem;
+        }
 
-.箭頭-左 { left: -60px; }
-.箭頭-右 { right: -60px; }
+        /* 通知框 */
+        #通知框 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(20, 20, 20, 0.95);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid #c5a059;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-/* 響應式：在手機版將箭頭移入彈窗內，避免超出螢幕 */
-@media (max-width: 992px) {
-    .箭頭-左 { left: 10px; }
-    .箭頭-右 { right: 10px; }
-    .導覽箭頭 { background: rgba(0, 0, 0, 0.6); }
-}
+        /* 關鍵修正：讓包了愛心的圖片容器，在電腦版也能維持 45% 的寬度 */
+        .img-container {
+            width: 100%;
+            position: relative;
+        }
 
-/* CSS 9 (彈窗內部功能：分頁切換按鈕、步驟樣式) */
-/* --- 詳情彈窗分頁切換樣式 (微調版) --- */
-.分頁切換區 {
-    display: flex;
-    gap: 15px; /* 按鈕之間分開一點，比較好點 */
-    margin-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 5px;
-}
+        @media (min-width: 768px) {
+            #詳情彈窗 .modal-body .img-container {
+                width: 45%;
+            }
 
-.分頁按鈕 {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.4);
-    padding: 5px 0;
-    font-size: 1rem;
-    cursor: pointer;
-    position: relative;
-    transition: 0.3s;
-    font-family: 'Noto Serif TC', serif;
-}
+            #詳情彈窗 .modal-body .img-container img {
+                width: 100%;
+            }
+        }
 
-.分頁按鈕:hover {
-    color: rgba(255, 255, 255, 0.8);
-}
+        /* 讓彈窗底部的線條變成深色，才不會有一條白線很突兀 */
+        .modal-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: center;
+            /* 按鈕置中 */
+        }
 
-.分頁按鈕.啟動 {
-    color: var(--奢華金色);
-    font-weight: bold;
-}
+        /* 導覽按鈕基本樣式 */
+        .導覽箭頭 {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1060;
+            /* 確保在 Modal 之上 */
+        }
 
-.分頁按鈕.啟動::after {
-    content: '';
-    position: absolute;
-    bottom: -6px; /* 金色線條的位置 */
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--奢華金色);
-}
+        .導覽箭頭:hover {
+            background: var(--奢華金);
+            color: black;
+            border-color: var(--奢華金);
+        }
 
-/* --- 新增：極簡步驟文字樣式 (原本的方塊樣式已刪除) --- */
-.步驟清單容器 {
-    display: none; /* 預設隱藏，由 JS 控制顯示 */
-}
+        .箭頭-左 {
+            left: -60px;
+        }
 
-.圖標工具列 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-}
+        .箭頭-右 {
+            right: -60px;
+        }
 
-.工具標籤 {
-    background: rgba(197, 160, 89, 0.1);
-    color: var(--奢華金色);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid rgba(197, 160, 89, 0.3);
-}
+        /* 響應式：在手機版將箭頭移入彈窗內，避免超出螢幕 */
+        @media (max-width: 992px) {
+            .箭頭-左 {
+                left: 10px;
+            }
 
-.純文字步驟列表 {
-    padding-left: 20px; /* 數字縮排 */
-    margin-top: 10px;
-    color: #d1d1d1;     /* 跟故事內文一樣的顏色 */
-    line-height: 2;   /* 行距拉開，好閱讀 */
-    font-size: 1rem;
-}
+            .箭頭-右 {
+                right: 10px;
+            }
 
-.純文字步驟列表 li {
-    margin-bottom: 10px; /* 每一條分開一點 */
-}
+            .導覽箭頭 {
+                background: rgba(0, 0, 0, 0.6);
+            }
+        }
 
+        /* CSS 9 (彈窗內部功能：分頁切換按鈕、步驟樣式) */
+        /* --- 詳情彈窗分頁切換樣式 (微調版) --- */
+        .分頁切換區 {
+            display: flex;
+            gap: 15px;
+            /* 按鈕之間分開一點，比較好點 */
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
 
-/* CSS 10 (搜尋輸入框樣式：Focus 狀態) */
-/* 搜尋框美化 */
-#搜尋輸入:focus {
-    background-color: #222 !important;
-    border-color: var(--奢華金色) !important;
-    box-shadow: 0 0 5px rgba(197, 160, 89, 0.5);
-    color: white;
-}
+        .分頁按鈕 {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 5px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+            font-family: 'Noto Serif TC', serif;
+        }
 
-.input-group-text {
-    border-right: none;
-}
+        .分頁按鈕:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
 
-#搜尋輸入 {
-    border-left: none;
-}
+        .分頁按鈕.啟動 {
+            color: var(--奢華金色);
+            font-weight: bold;
+        }
 
-/* CSS 11 (法律規範：底部固定警語欄) */
-/* --- 法律規範：10% 固定警語欄樣式 --- */
-.酒類警語固定欄 {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10vh; /* 關鍵：佔據螢幕高度的 10% */
-    background-color: #000000; /* 純黑底 */
-    color: #ffffff;           /* 純白字，達成最高對比 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;            /* 確保在所有元件（包含彈窗）之上 */
-    border-top: 2px solid var(--奢華金色); /* 加上金色邊框維持美感，但不影響警語獨立性 */
-    pointer-events: none;     /* 讓這欄不影響下方元件的點擊，但法規上建議保留顯示即可 */
-}
+        .分頁按鈕.啟動::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            /* 金色線條的位置 */
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--奢華金色);
+        }
 
-.警語容器 {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 90%;
-    justify-content: center;
-}
+        /* --- 新增：極簡步驟文字樣式 (原本的方塊樣式已刪除) --- */
+        .步驟清單容器 {
+            display: none;
+            /* 預設隱藏，由 JS 控制顯示 */
+        }
 
-.警語文字 {
-    font-size: clamp(1.2rem, 4vh, 2.5rem); /* 隨螢幕大小縮放字體 */
-    font-weight: 900;                      /* 極粗體 */
-    letter-spacing: 5px;                  /* 字距拉開，增加顯著性 */
-    font-family: sans-serif;               /* 使用黑體/無襯線體，最清晰 */
-}
+        .圖標工具列 {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
 
-.警語分隔線 {
-    font-size: 2rem;
-    color: var(--奢華金色);
-}
+        .工具標籤 {
+            background: rgba(197, 160, 89, 0.1);
+            color: var(--奢華金色);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
 
-/* 響應式微調：手機版改為上下兩行以維持面積比 */
-@media (max-width: 768px) {
-    .警語容器 {
-        flex-direction: column;
-        gap: 5px;
-    }
-    .警語文字 {
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-    }
-    .警語分隔線 {
-        display: none;
-    }
-}
+        .純文字步驟列表 {
+            padding-left: 20px;
+            /* 數字縮排 */
+            margin-top: 10px;
+            color: #d1d1d1;
+            /* 跟故事內文一樣的顏色 */
+            line-height: 2;
+            /* 行距拉開，好閱讀 */
+            font-size: 1rem;
+        }
 
-/* 確保頁尾內容不會被警語欄遮住 */
-body {
-    padding-bottom: 12vh; /* 比 10% 再多一點點 */
-}
-
-/* CSS 12 (雜項：隱藏捲軸樣式、晶片標籤、手機版微型選單) */
-/* 隱藏橫向捲軸但保留滑動功能 */
-.hide-scrollbar::-webkit-scrollbar { display: none; }
-.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* 晶片按鈕樣式 */
-.晶片標籤 {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(197, 160, 89, 0.4);
-    color: #c5a059;
-    white-space: nowrap; /* 禁止換行 */
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
-.晶片標籤:active, .晶片標籤:hover {
-    background: #c5a059;
-    color: #000;
-}
+        .純文字步驟列表 li {
+            margin-bottom: 10px;
+            /* 每一條分開一點 */
+        }
 
 
-/* 隱藏橫向捲軸 */
-.hide-scrollbar::-webkit-scrollbar { display: none; }
-.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* CSS 10 (搜尋輸入框樣式：Focus 狀態) */
+        /* 搜尋框美化 */
+        #搜尋輸入:focus {
+            background-color: #222 !important;
+            border-color: var(--奢華金色) !important;
+            box-shadow: 0 0 5px rgba(197, 160, 89, 0.5);
+            color: white;
+        }
 
-/* 手機版微型選單樣式 */
-.手機版-微型選單 {
-    appearance: none; /* 移除預設箭頭 */
-    -webkit-appearance: none;
-    background-color: rgba(255, 255, 255, 0.1) !important; /* 半透明背景 */
-    border: 1px solid rgba(197, 160, 89, 0.4) !important;
-    color: #c5a059 !important;
-    border-radius: 20px !important; /* 圓角 */
-    padding: 5px 15px !important;
-    font-size: 0.9rem !important;
-    width: auto !important; /* 寬度隨內容自動縮放 */
-    min-width: 100px; /* 最小寬度 */
-    text-align: center;
-    background-image: none !important; /* 確保沒有箭頭圖片 */
-    cursor: pointer;
-}
+        .input-group-text {
+            border-right: none;
+        }
 
-/* 選中後的狀態 (Optional) */
-.手機版-微型選單:focus {
-    box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.5);
-    background-color: rgba(0, 0, 0, 0.8) !important;
-}
+        #搜尋輸入 {
+            border-left: none;
+        }
 
-/* CSS 13 (彈窗底部墊高修復：防止被警語擋住) */
-/* 1. 讓彈窗恢復自由高度，解決「小視窗感」和「箭頭消失」 */
-.modal-content {
-    max-height: none !important; /* 解除高度限制 */
-    overflow: visible !important; /* 關鍵！讓箭頭可以超出框框顯示 */
-}
+        /* CSS 11 (法律規範：底部固定警語欄) */
+        /* --- 法律規範：10% 固定警語欄樣式 --- */
+        .酒類警語固定欄 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10vh;
+            /* 關鍵：佔據螢幕高度的 10% */
+            background-color: #000000;
+            /* 純黑底 */
+            color: #ffffff;
+            /* 純白字，達成最高對比 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            /* 確保在所有元件（包含彈窗）之上 */
+            border-top: 2px solid var(--奢華金色);
+            /* 加上金色邊框維持美感，但不影響警語獨立性 */
+            pointer-events: none;
+            /* 讓這欄不影響下方元件的點擊，但法規上建議保留顯示即可 */
+        }
 
-/* 2. 針對彈窗容器進行「底部墊高」 */
-.modal-dialog {
-    /* 這裡原本是 margin-bottom，改成 padding-bottom 效果更好 */
-    /* 確保滑到底部時，彈窗最下方會留出 15vh 的空間，剛好避開警語 */
-    padding-bottom: 15vh !important; 
-    
-    /* 保持垂直置中，但如果內容太長會自動變成從頂部開始滾動 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100%; 
-}
+        .警語容器 {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 90%;
+            justify-content: center;
+        }
 
-/* 3. 電腦版特別優化 */
-@media (min-width: 768px) {
-    .modal-dialog {
-        padding-bottom: 12vh !important; /* 電腦版警語佔比小一點，墊 12vh 就夠 */
-    }
-}
+        .警語文字 {
+            font-size: clamp(1.2rem, 4vh, 2.5rem);
+            /* 隨螢幕大小縮放字體 */
+            font-weight: 900;
+            /* 極粗體 */
+            letter-spacing: 5px;
+            /* 字距拉開，增加顯著性 */
+            font-family: sans-serif;
+            /* 使用黑體/無襯線體，最清晰 */
+        }
 
-/* CSS 14 (頁碼切換器樣式) */
-/* 頁數切換 */
+        .警語分隔線 {
+            font-size: 2rem;
+            color: var(--奢華金色);
+        }
 
-.分頁容器 {
-    background: rgba(30, 30, 30, 0.6);
-    padding: 10px 20px;
-    border-radius: 50px;
-    border: 1px solid rgba(197, 160, 89, 0.3);
-}
+        /* 響應式微調：手機版改為上下兩行以維持面積比 */
+        @media (max-width: 768px) {
+            .警語容器 {
+                flex-direction: column;
+                gap: 5px;
+            }
 
-.分頁按鈕 {
-    background: #3a3a3e;
-    color: #fff;
-    border-radius: 8px;
-    padding: 6px 15px;
-    font-size: 0.9rem;
-    border: none;
-    transition: 0.3s;
-}
+            .警語文字 {
+                font-size: 1.2rem;
+                letter-spacing: 2px;
+            }
 
-.分頁按鈕:hover {
-    background: var(--奢華金色);
-    color: #000;
-}
+            .警語分隔線 {
+                display: none;
+            }
+        }
 
-.分頁按鈕:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
+        /* 確保頁尾內容不會被警語欄遮住 */
+        body {
+            padding-bottom: 12vh;
+            /* 比 10% 再多一點點 */
+        }
 
-.頁碼輸入組 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--次要文字色);
-}
+        /* CSS 12 (雜項：隱藏捲軸樣式、晶片標籤、手機版微型選單) */
+        /* 隱藏橫向捲軸但保留滑動功能 */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
 
-.頁碼輸入 {
-    width: 60px;
-    height: 35px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--奢華金色);
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    font-weight: bold;
-}
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-.總頁數顯示 {
-    font-size: 1rem;
-    letter-spacing: 1px;
-}
+        /* 晶片按鈕樣式 */
+        .晶片標籤 {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            color: #c5a059;
+            white-space: nowrap;
+            /* 禁止換行 */
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
 
-/* --- 修復：側邊欄底部被警語擋住的問題 --- */
-.offcanvas-body {
-    /* 這裡給它 20vh 的空間，保證最後一個按鈕一定滑得出來 */
-    padding-bottom: 20vh !important; 
-}
-
-
+        .晶片標籤:active,
+        .晶片標籤:hover {
+            background: #c5a059;
+            color: #000;
+        }
 
 
+        /* 隱藏橫向捲軸 */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 手機版微型選單樣式 */
+        .手機版-微型選單 {
+            appearance: none;
+            /* 移除預設箭頭 */
+            -webkit-appearance: none;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            /* 半透明背景 */
+            border: 1px solid rgba(197, 160, 89, 0.4) !important;
+            color: #c5a059 !important;
+            border-radius: 20px !important;
+            /* 圓角 */
+            padding: 5px 15px !important;
+            font-size: 0.9rem !important;
+            width: auto !important;
+            /* 寬度隨內容自動縮放 */
+            min-width: 100px;
+            /* 最小寬度 */
+            text-align: center;
+            background-image: none !important;
+            /* 確保沒有箭頭圖片 */
+            cursor: pointer;
+        }
+
+        /* 選中後的狀態 (Optional) */
+        .手機版-微型選單:focus {
+            box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.5);
+            background-color: rgba(0, 0, 0, 0.8) !important;
+        }
+
+        /* CSS 13 (彈窗底部墊高修復：防止被警語擋住) */
+        /* 1. 讓彈窗恢復自由高度，解決「小視窗感」和「箭頭消失」 */
+        .modal-content {
+            max-height: none !important;
+            /* 解除高度限制 */
+            overflow: visible !important;
+            /* 關鍵！讓箭頭可以超出框框顯示 */
+        }
+
+        /* 2. 針對彈窗容器進行「底部墊高」 */
+        .modal-dialog {
+            /* 這裡原本是 margin-bottom，改成 padding-bottom 效果更好 */
+            /* 確保滑到底部時，彈窗最下方會留出 15vh 的空間，剛好避開警語 */
+            padding-bottom: 15vh !important;
+
+            /* 保持垂直置中，但如果內容太長會自動變成從頂部開始滾動 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100%;
+        }
+
+        /* 3. 電腦版特別優化 */
+        @media (min-width: 768px) {
+            .modal-dialog {
+                padding-bottom: 12vh !important;
+                /* 電腦版警語佔比小一點，墊 12vh 就夠 */
+            }
+        }
+
+        /* CSS 14 (頁碼切換器樣式) */
+        /* 頁數切換 */
+
+        .分頁容器 {
+            background: rgba(30, 30, 30, 0.6);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .分頁按鈕 {
+            background: #3a3a3e;
+            color: #fff;
+            border-radius: 8px;
+            padding: 6px 15px;
+            font-size: 0.9rem;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .分頁按鈕:hover {
+            background: var(--奢華金色);
+            color: #000;
+        }
+
+        .分頁按鈕:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .頁碼輸入組 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--次要文字色);
+        }
+
+        .頁碼輸入 {
+            width: 60px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--奢華金色);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .總頁數顯示 {
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* --- 修復：側邊欄底部被警語擋住的問題 --- */
+        .offcanvas-body {
+            /* 這裡給它 20vh 的空間，保證最後一個按鈕一定滑得出來 */
+            padding-bottom: 20vh !important;
+        }
     </style>
 </head>
+
 <body>
-    <!-- 側邊攔與登入 -->
-    
-   
-
-<div class="offcanvas offcanvas-end 微醺側邊欄容器" tabindex="-1" id="側邊選單本體">
-  <div class="offcanvas-header 底部金色邊框">
-    <h5 class="offcanvas-title 金色文字">微醺圖書館</h5>
-    <button type="button" class="btn-close btn-close-white me-auto ms-0" data-bs-dismiss="offcanvas"></button>
-  </div>
-  
-  <div class="offcanvas-body">
-    <div class="mb-4 d-md-none border-bottom border-secondary pb-4">
-    <label class="金色文字 小字體 mb-2">
-        <i class="bi bi-search"></i> 搜尋館藏
-    </label>
-    <input type="text" id="搜尋輸入_手機" class="表單元件 毛玻璃輸入框 w-100" 
-           placeholder="輸入酒名或材料..." oninput="執行篩選()">
-</div>
-
-    <div class="會員登入區 底部間距">
-      <h6 class="白色透明文字 底部小間距">會員登入</h6>
-      <div class="會員中心區 底部間距">
-    <h6 class="白色透明文字 底部小間距">個人服務</h6>
-    <div class="會員中心區 底部間距">
-    <ul class="導覽列表">
-        <li class="列表項目">
-            <a class="導覽連結 白色文字" href="#" data-bs-toggle="modal" data-bs-target="#登入彈窗">
-                <i class="bi bi-person-circle me-2"></i> 會員登入 / 註冊
-            </a>
-        </li>
-    </ul>
-</div>
-</div>
-      <div id="登入狀態訊息" class="頂部小間距 小字體 金色文字"></div>
-    </div>
-
-    <ul class="導覽列表">
-      <li class="列表項目 底部小間距">
-        <a class="導覽連結 白色文字" href="#" onclick="隨機選酒邏輯()"><i class="bi bi-shuffle me-2"></i> 隨機選酒</a>
-      </li>
-      <li class="列表項目 底部小間距">
-    <a class="導覽連結 白色文字" href="#" onclick="生成微醺套餐()">
-        <i class="bi bi-stars me-2"></i> 微醺套餐推薦 (3 Courses)
-    </a>
-</li>
-      <li class="列表項目 底部小間距">
-        <a class="導覽連結 白色文字" href="https://www.google.com/maps/search/?api=1&query=酒吧" target="_blank"><i class="bi bi-geo-alt me-2"></i> 附近的酒吧</a>
-      </li>
-      <li class="列表項目 底部小間距">
-        <a class="導覽連結 白色文字" href="http://www.google.com/maps/search/%E4%BE%BF%E5%88%A9%E5%95%86%E5%BA%97" target="_blank"><i class="bi bi-geo-alt me-2"></i> 附近的超商</a>
-      </li>
-      <li class="列表項目">
-        <a class="導覽連結 白色文字" href="https://m.uber.com/ul" target="_blank">
-          <i class="bi bi-car-front me-2"></i> 一鍵叫車
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
-    
-   
-    
-           <!-- 頂部塞選器 -->
-    
-    <div class="頂部篩選列">
-    <div class="container-fluid">
-        <div class="row g-2 align-items-center flex-nowrap">
-            
-            <div class="col-auto">
-                <h4 class="m-0 金色文字" style="letter-spacing: 2px; cursor: pointer; white-space: nowrap; font-size: 1.2rem;" onclick="回到首頁()">
-                    <span class="d-md-none">微醺</span> <span class="d-none d-md-inline">微醺圖書館</span> </h4>
-            </div>
-
-            <div class="col-md-3 ms-md-2 d-none d-md-block">
-                <div class="input-group">
-                    <span class="input-group-text bg-dark border-secondary text-secondary" style="border-right: none;"><i class="bi bi-search"></i></span>
-                    <input type="text" id="搜尋輸入" class="form-control bg-dark border-secondary text-white" 
-                           style="border-left: none; height: 40px;" placeholder="搜尋酒名..." oninput="執行篩選()">
+    <!-- [第一階段實作] 18 歲年齡驗證彈窗 -->
+    <div class="modal fade" id="ageVerificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="ageVerificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-white" style="background-color: #1a1a1a; border: 1px solid var(--奢華金色);">
+                <div class="modal-header border-0 justify-content-center">
+                    <h5 class="modal-title" id="ageVerificationModalLabel"
+                        style="color: var(--奢華金色); font-weight: bold; font-size: 1.5rem;">
+                        <i class="bi bi-shield-lock-fill me-2"></i>年齡驗證
+                    </h5>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="mb-4" style="font-size: 1.1rem; line-height: 1.6;">
+                        本網站包含酒類相關資訊。<br>
+                        請問您是否已年滿 <strong>18</strong> 歲？
+                    </p>
+                </div>
+                <div class="modal-footer border-0 flex-column gap-2 pb-4">
+                    <button type="button" class="btn 奢華金填滿按鈕 w-75 py-2" id="btnAdultConfirm">我已滿 18 歲，進入網站</button>
+                    <button type="button" class="btn btn-outline-secondary w-75" id="btnUnderageExit">我未滿 18
+                        歲，離開</button>
                 </div>
             </div>
-            
-            <div class="col-md-2 d-none d-md-block">
-                <select class="form-select" id="篩選-基酒" onchange="執行篩選()">
-                    <option value="all">基酒 (Base)</option>
-                    <option value="Gin">琴酒 (Gin)</option>
-                    <option value="Vodka">伏特加 (Vodka)</option>
-                    <option value="Rum">蘭姆酒 (Rum)</option>
-                    <option value="Whiskey">威士忌 (Whiskey)</option>
-                    <option value="Tequila">龍舌蘭 (Tequila)</option>
-                </select>
-            </div>
-            <div class="col-md-2 d-none d-md-block">
-                <select class="form-select" id="篩選-濃度" onchange="執行篩選()">
-                    <option value="all">濃度 (ABV)</option>
-                    <option value="low">微醺 &lt;12%</option>
-                    <option value="med">剛好 12-25%</option>
-                    <option value="high">重擊 &gt;25%</option>
-                </select>
-            </div>
-            <div class="col-md-2 d-none d-md-block">
-                <select class="form-select" id="篩選-口感" onchange="執行篩選()">
-                    <option value="all">風味 (Taste)</option>
-                    <option value="酸甜/果香">酸甜/果香</option>
-                    <option value="辛辣/不甜">辛辣/不甜</option>
-                    <option value="清爽/氣泡">清爽/氣泡</option>
-                    <option value="苦甜/大人味">苦甜/大人味</option>
-                </select>
+        </div>
+    </div>
+    <!-- 側邊攔與登入 -->
+
+
+
+    <div class="offcanvas offcanvas-end 微醺側邊欄容器" tabindex="-1" id="側邊選單本體">
+        <div class="offcanvas-header 底部金色邊框">
+            <h5 class="offcanvas-title 金色文字">微醺圖書館</h5>
+            <button type="button" class="btn-close btn-close-white me-auto ms-0" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <div class="mb-4 d-md-none border-bottom border-secondary pb-4">
+                <label class="金色文字 小字體 mb-2">
+                    <i class="bi bi-search"></i> 搜尋館藏
+                </label>
+                <input type="text" id="搜尋輸入_手機" class="表單元件 毛玻璃輸入框 w-100" placeholder="輸入酒名或材料..." oninput="執行篩選()">
             </div>
 
-            <div class="col d-md-none overflow-x-auto hide-scrollbar">
-                <div class="d-flex gap-2">
-                    <select class="form-select 手機版-微型選單" id="篩選-基酒-手機" onchange="執行篩選()">
-                        <option value="all"> 全部基酒</option> <option value="Gin">琴酒</option>
-                        <option value="Vodka">伏特加</option>
-                        <option value="Rum">蘭姆酒</option>
-                        <option value="Whiskey">威士忌</option>
-                        <option value="Tequila">龍舌蘭</option>
+            <div class="會員登入區 底部間距">
+                <h6 class="白色透明文字 底部小間距">會員登入</h6>
+                <div class="會員中心區 底部間距">
+                    <h6 class="白色透明文字 底部小間距">個人服務</h6>
+                    <div class="會員中心區 底部間距">
+                        <ul class="導覽列表">
+                            <li class="列表項目">
+                                <a class="導覽連結 白色文字" href="#" data-bs-toggle="modal" data-bs-target="#登入彈窗">
+                                    <i class="bi bi-person-circle me-2"></i> 會員登入 / 註冊
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="登入狀態訊息" class="頂部小間距 小字體 金色文字"></div>
+            </div>
+
+            <ul class="導覽列表">
+                <li class="列表項目 底部小間距">
+                    <a class="導覽連結 白色文字" href="#" onclick="隨機選酒邏輯()"><i class="bi bi-shuffle me-2"></i> 隨機選酒</a>
+                </li>
+                <li class="列表項目 底部小間距">
+                    <a class="導覽連結 白色文字" href="#" onclick="生成微醺套餐()">
+                        <i class="bi bi-stars me-2"></i> 微醺套餐推薦 (3 Courses)
+                    </a>
+                </li>
+                <li class="列表項目 底部小間距">
+                    <a class="導覽連結 白色文字" href="https://www.google.com/maps/search/?api=1&query=酒吧" target="_blank"><i
+                            class="bi bi-geo-alt me-2"></i> 附近的酒吧</a>
+                </li>
+                <li class="列表項目 底部小間距">
+                    <a class="導覽連結 白色文字" href="http://www.google.com/maps/search/%E4%BE%BF%E5%88%A9%E5%95%86%E5%BA%97"
+                        target="_blank"><i class="bi bi-geo-alt me-2"></i> 附近的超商</a>
+                </li>
+                <li class="列表項目">
+                    <a class="導覽連結 白色文字" href="https://m.uber.com/ul" target="_blank">
+                        <i class="bi bi-car-front me-2"></i> 一鍵叫車
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <!-- 頂部塞選器 -->
+
+    <div class="頂部篩選列">
+        <div class="container-fluid">
+            <div class="row g-2 align-items-center flex-nowrap">
+
+                <div class="col-auto">
+                    <h4 class="m-0 金色文字"
+                        style="letter-spacing: 2px; cursor: pointer; white-space: nowrap; font-size: 1.2rem;"
+                        onclick="回到首頁()">
+                        <span class="d-md-none">微醺</span> <span class="d-none d-md-inline">微醺圖書館</span>
+                    </h4>
+                </div>
+
+                <div class="col-md-3 ms-md-2 d-none d-md-block">
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark border-secondary text-secondary"
+                            style="border-right: none;"><i class="bi bi-search"></i></span>
+                        <input type="text" id="搜尋輸入" class="form-control bg-dark border-secondary text-white"
+                            style="border-left: none; height: 40px;" placeholder="搜尋酒名..." oninput="執行篩選()">
+                    </div>
+                </div>
+
+                <div class="col-md-2 d-none d-md-block">
+                    <select class="form-select" id="篩選-基酒" onchange="執行篩選()">
+                        <option value="all">基酒 (Base)</option>
+                        <option value="Gin">琴酒 (Gin)</option>
+                        <option value="Vodka">伏特加 (Vodka)</option>
+                        <option value="Rum">蘭姆酒 (Rum)</option>
+                        <option value="Whiskey">威士忌 (Whiskey)</option>
+                        <option value="Tequila">龍舌蘭 (Tequila)</option>
                     </select>
-
-                    <select class="form-select 手機版-微型選單" id="篩選-濃度-手機" onchange="執行篩選()">
-                        <option value="all"> 全部濃度</option>
+                </div>
+                <div class="col-md-2 d-none d-md-block">
+                    <select class="form-select" id="篩選-濃度" onchange="執行篩選()">
+                        <option value="all">濃度 (ABV)</option>
                         <option value="low">微醺 &lt;12%</option>
                         <option value="med">剛好 12-25%</option>
                         <option value="high">重擊 &gt;25%</option>
                     </select>
-
-                    <select class="form-select 手機版-微型選單" id="篩選-口感-手機" onchange="執行篩選()">
-                        <option value="all"> 全部風味</option>
+                </div>
+                <div class="col-md-2 d-none d-md-block">
+                    <select class="form-select" id="篩選-口感" onchange="執行篩選()">
+                        <option value="all">風味 (Taste)</option>
                         <option value="酸甜/果香">酸甜/果香</option>
                         <option value="辛辣/不甜">辛辣/不甜</option>
                         <option value="清爽/氣泡">清爽/氣泡</option>
                         <option value="苦甜/大人味">苦甜/大人味</option>
                     </select>
                 </div>
-            </div>
 
-            <div class="col-auto">
-                <button class="漢堡按鈕" type="button" data-bs-toggle="offcanvas" data-bs-target="#側邊選單本體">
-                    <i class="bi bi-list 漢堡圖示"></i>
-                </button>
-            </div>
+                <div class="col d-md-none overflow-x-auto hide-scrollbar">
+                    <div class="d-flex gap-2">
+                        <select class="form-select 手機版-微型選單" id="篩選-基酒-手機" onchange="執行篩選()">
+                            <option value="all"> 全部基酒</option>
+                            <option value="Gin">琴酒</option>
+                            <option value="Vodka">伏特加</option>
+                            <option value="Rum">蘭姆酒</option>
+                            <option value="Whiskey">威士忌</option>
+                            <option value="Tequila">龍舌蘭</option>
+                        </select>
 
+                        <select class="form-select 手機版-微型選單" id="篩選-濃度-手機" onchange="執行篩選()">
+                            <option value="all"> 全部濃度</option>
+                            <option value="low">微醺 &lt;12%</option>
+                            <option value="med">剛好 12-25%</option>
+                            <option value="high">重擊 &gt;25%</option>
+                        </select>
+
+                        <select class="form-select 手機版-微型選單" id="篩選-口感-手機" onchange="執行篩選()">
+                            <option value="all"> 全部風味</option>
+                            <option value="酸甜/果香">酸甜/果香</option>
+                            <option value="辛辣/不甜">辛辣/不甜</option>
+                            <option value="清爽/氣泡">清爽/氣泡</option>
+                            <option value="苦甜/大人味">苦甜/大人味</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <button class="漢堡按鈕" type="button" data-bs-toggle="offcanvas" data-bs-target="#側邊選單本體">
+                        <i class="bi bi-list 漢堡圖示"></i>
+                    </button>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 
-    
-    
-    
+
+
+
     <!-- 彈出式酒單 -->
-    
+
     <div class="container py-5">
         <div class="row g-4" id="雞尾酒展示網格">
-            
+
             <div id="載入提示" class="text-center mt-5 w-100">
-        <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem;">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <p class="mt-3 text-white-50">正在喚醒微醺靈魂，請稍候...</p>
-    </div>
+                <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 text-white-50">正在喚醒微醺靈魂，請稍候...</p>
+            </div>
 
         </div>
     </div>
@@ -841,55 +1017,56 @@ body {
                 <div class="導覽箭頭 箭頭-右" onclick="切換相鄰調酒(1)"><i class="bi bi-chevron-right"></i></div>
                 <div class="modal-header">
                     <h5 class="modal-title" id="彈窗-標題">Cocktail Name</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <img src="" alt="" class="彈窗大圖" id="彈窗-圖片">
                     <div class="彈窗右側資訊">
-    <div class="d-flex gap-2 mb-3">
-        <span class="自訂標籤" id="彈窗-基酒">Base</span>
-        <span class="自訂標籤" id="彈窗-濃度">ABV</span>
-        <span class="自訂標籤" id="彈窗-口感">Taste</span>
-    </div>
+                        <div class="d-flex gap-2 mb-3">
+                            <span class="自訂標籤" id="彈窗-基酒">Base</span>
+                            <span class="自訂標籤" id="彈窗-濃度">ABV</span>
+                            <span class="自訂標籤" id="彈窗-口感">Taste</span>
+                        </div>
 
-    <h6 class="text-white-50">材料：</h6>
-    <p id="彈窗-材料列表" class="mb-4 text-light"></p>
+                        <h6 class="text-white-50">材料：</h6>
+                        <p id="彈窗-材料列表" class="mb-4 text-light"></p>
 
-    <div class="分頁切換區">
-        <button class="分頁按鈕 啟動" id="鈕-故事" onclick="切換分頁('故事')">📖 靈魂故事</button>
-        <button class="分頁按鈕" id="鈕-步驟" onclick="切換分頁('步驟')">🍸 製作細節</button>
-    </div>
+                        <div class="分頁切換區">
+                            <button class="分頁按鈕 啟動" id="鈕-故事" onclick="切換分頁('故事')">📖 靈魂故事</button>
+                            <button class="分頁按鈕" id="鈕-步驟" onclick="切換分頁('步驟')">🍸 製作細節</button>
+                        </div>
 
-    <p class="故事內文" id="彈窗-故事文字"></p>
+                        <p class="故事內文" id="彈窗-故事文字"></p>
 
-    <div id="彈窗-步驟區" class="步驟清單">
-        <div class="圖標工具列">
-            <span class="工具標籤" id="標籤-技法"><i class="bi bi-funnel"></i> 技法</span>
-            <span class="工具標籤" id="標籤-杯型"><i class="bi bi-cup-straw"></i> 杯型</span>
-        </div>
-        <div id="步驟列表容器">
-            </div>
-    </div>
+                        <div id="彈窗-步驟區" class="步驟清單">
+                            <div class="圖標工具列">
+                                <span class="工具標籤" id="標籤-技法"><i class="bi bi-funnel"></i> 技法</span>
+                                <span class="工具標籤" id="標籤-杯型"><i class="bi bi-cup-straw"></i> 杯型</span>
+                            </div>
+                            <div id="步驟列表容器">
+                            </div>
+                        </div>
 
-    <div id="登入限定功能區" class="mt-4 border-top border-secondary pt-3"></div>
-</div>
+                        <div id="登入限定功能區" class="mt-4 border-top border-secondary pt-3"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="單抽重選按鈕" type="button" class="btn btn-outline-light rounded-pill px-4" 
-                     onclick="隨機選酒邏輯()" style="display: none;">
-                     <i class="bi bi-shuffle me-2"></i> 沒感覺？隨機再抽一杯
-                </button>
+                    <button id="單抽重選按鈕" type="button" class="btn btn-outline-light rounded-pill px-4" onclick="隨機選酒邏輯()"
+                        style="display: none;">
+                        <i class="bi bi-shuffle me-2"></i> 沒感覺？隨機再抽一杯
+                    </button>
                 </div>
-                </div>
+            </div>
         </div>
     </div>
 
-    
 
 
 
 
-<div class="modal fade" id="套餐彈窗" tabindex="-1" aria-hidden="true">
+
+    <div class="modal fade" id="套餐彈窗" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content" style="background-color: #1a1a1a; border: 1px solid var(--奢華金);">
                 <div class="modal-header border-bottom border-secondary">
@@ -912,210 +1089,234 @@ body {
                         <i class="bi bi-arrow-clockwise me-2"></i> 不滿意？換一組菜單
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 頁數切換 -->
+
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-auto d-flex align-items-center gap-3 分頁容器">
+                <button class="btn 分頁按鈕" id="分頁-上一頁" onclick="切換分頁(當前頁碼 - 1)">上一頁</button>
+
+                <div class="頁碼輸入組">
+                    <input type="text" id="頁碼輸入框" class="頁碼輸入" value="1" inputmode="numeric" pattern="[0-9]*"
+                        onchange="處理輸入跳轉(this.value)">
+                    <span class="總頁數顯示">/ <span id="總頁數文字">1</span></span>
                 </div>
+
+                <button class="btn 分頁按鈕" id="分頁-下一頁" onclick="切換分頁(當前頁碼 + 1)">下一頁</button>
+            </div>
         </div>
     </div>
 
 
-     <!-- 頁數切換 -->
-
-     <div class="container mt-5 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-auto d-flex align-items-center gap-3 分頁容器">
-            <button class="btn 分頁按鈕" id="分頁-上一頁" onclick="切換分頁(當前頁碼 - 1)">上一頁</button>
-            
-            <div class="頁碼輸入組">
-                <input type="text" 
-                       id="頁碼輸入框" 
-                       class="頁碼輸入" 
-                       value="1" 
-                       inputmode="numeric" 
-                       pattern="[0-9]*" 
-                       onchange="處理輸入跳轉(this.value)">
-                <span class="總頁數顯示">/ <span id="總頁數文字">1</span></span>
-            </div>
-
-            <button class="btn 分頁按鈕" id="分頁-下一頁" onclick="切換分頁(當前頁碼 + 1)">下一頁</button>
-        </div>
-    </div>
-</div>
 
 
 
 
+    <!-- 頁尾內容 -->
 
 
-                 <!-- 頁尾內容 -->
+    <footer class="頁尾容器">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="頁尾標題">微醺圖書館</h5>
+                    <p class="頁尾文字">每一杯酒都是一個故事，我們不只是調酒，我們是在收藏深夜裡的那些靈魂片段。</p>
+                </div>
 
+                <div class="col-md-4">
+                    <h5 class="頁尾標題">快速功能</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://m.uber.com/ul" target="_blank" class="頁尾連結">一鍵叫車 (Uber)</a></li>
+                        <li><a href="https://www.google.com/maps/search/%E9%85%92%E5%90%A7" target="_blank"
+                                class="頁尾連結">搜尋附近酒吧</a></li>
+                        <li><a href="http://www.google.com/maps/search/%E4%BE%BF%E5%88%A9%E5%95%86%E5%BA%97"
+                                target="_blank" class="頁尾連結">搜尋附近超商</a></li>
+                        <li><a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=GTvVlcSMTSDwmtVnvhXZgVPnxHRmGqNbHsXkXppXJKPQGBwbkvqxsznvzNfKNVcjMHXDVmnXZjjWQ"
+                                class="頁尾連結">聯絡我們 (Gmail)</a></li>
+                        <li><a href="https://www.instagram.com/b20011006/" target="_blank" class="頁尾連結">追蹤我們的 IG</a>
+                        </li>
+                    </ul>
+                </div>
 
-         <footer class="頁尾容器">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <h5 class="頁尾標題">微醺圖書館</h5>
-                <p class="頁尾文字">每一杯酒都是一個故事，我們不只是調酒，我們是在收藏深夜裡的那些靈魂片段。</p>
-            </div>
-
-            <div class="col-md-4">
-                <h5 class="頁尾標題">快速功能</h5>
-                <ul class="list-unstyled">
-                    <li><a href="https://m.uber.com/ul" target="_blank" class="頁尾連結">一鍵叫車 (Uber)</a></li>
-                    <li><a href="https://www.google.com/maps/search/%E9%85%92%E5%90%A7" target="_blank" class="頁尾連結">搜尋附近酒吧</a></li>
-                    <li><a href="http://www.google.com/maps/search/%E4%BE%BF%E5%88%A9%E5%95%86%E5%BA%97" target="_blank" class="頁尾連結">搜尋附近超商</a></li>
-                    <li><a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=GTvVlcSMTSDwmtVnvhXZgVPnxHRmGqNbHsXkXppXJKPQGBwbkvqxsznvzNfKNVcjMHXDVmnXZjjWQ" class="頁尾連結">聯絡我們 (Gmail)</a></li>
-                    <li><a href="https://www.instagram.com/b20011006/" target="_blank" class="頁尾連結">追蹤我們的 IG</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-4 text-md-end">
-                <h5 class="頁尾標題">飲酒須知</h5>
-                <p class="頁尾警語">飲酒過量，有礙健康。未滿十八歲禁止飲酒。</p>
-                <p class="頁尾警語">喝酒不開車，開車不喝酒。</p>
-                <div class="mt-3">
-                    <small class="text-secondary">© 2026 The Tipsy Library. All rights reserved.</small>
+                <div class="col-md-4 text-md-end">
+                    <h5 class="頁尾標題">飲酒須知</h5>
+                    <p class="頁尾警語">飲酒過量，有礙健康。未滿十八歲禁止飲酒。</p>
+                    <p class="頁尾警語">喝酒不開車，開車不喝酒。</p>
+                    <div class="mt-3">
+                        <small class="text-secondary">© 2026 The Tipsy Library. All rights reserved.</small>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
-          <!-- 登入的彈出式卡片 -->
-    
-<div class="modal fade" id="登入彈窗" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content 奢華毛玻璃卡片">
-            <div class="modal-header border-0">
-                <h5 class="modal-title 金色文字" style="letter-spacing: 3px;">MEMBER LOGIN</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <div class="mb-4">
-                    <label class="白色透明文字 小字體 mb-2 d-block">電子信箱 (Email)</label>
-                    <input type="email" id="登入-信箱" class="表單元件 毛玻璃輸入框" placeholder="請輸入您的 Email">
-                </div>
-                <div class="mb-4">
-                    <label class="白色透明文字 小字體 mb-2 d-block">通關密語 (Password)</label>
-                    <input type="password" id="登入-密碼" class="表單元件 毛玻璃輸入框" placeholder="請輸入密碼">
-                </div>
-                <button class="按鈕 奢華金填滿按鈕 寬度百分百" onclick="執行彈窗登入()">
-                    確認登入
-                </button>
+    <!-- 登入的彈出式卡片 -->
 
-
-
-<div class="mt-3 text-center">
-    <span class="text-white-50 小字體">或使用第三方登入</span>
-</div>
-<div class="mt-2 d-flex justify-content-center">
-    <div id="g_id_onload"
-         data-client_id="32725652104-7gn6vkkqvsg79ps5r40jpkqmpfm5p1an.apps.googleusercontent.com"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-callback="處理Google登入回應"
-         data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin"
-         data-type="standard"
-         data-shape="rectangular"
-         data-theme="filled_black"
-         data-text="signin_with"
-         data-size="large"
-         data-logo_alignment="left">
-    </div>
-</div>
-
-                <div class="text-center mt-3">
-                    <small class="白色透明文字">還沒加入圖書館？ 
-                        <a href="#" class="金色文字" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#註冊彈窗">立即註冊</a>
-                    </small>
+    <div class="modal fade" id="登入彈窗" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content 奢華毛玻璃卡片">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title 金色文字" style="letter-spacing: 3px;">MEMBER LOGIN</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="modal-body p-4">
+                    <div id="一般登入區塊">
+                        <div class="mb-4">
+                            <label class="白色透明文字 小字體 mb-2 d-block">電子信箱 (Email)</label>
+                            <input type="email" id="登入-信箱" class="表單元件 毛玻璃輸入框 text-white p-2 w-100"
+                                placeholder="請輸入您的 Email">
+                        </div>
+                        <div class="mb-4">
+                            <label class="白色透明文字 小字體 mb-2 d-block">通關密語 (Password)</label>
+                            <input type="password" id="登入-密碼" class="表單元件 毛玻璃輸入框 text-white p-2 w-100"
+                                placeholder="請輸入密碼">
+                        </div>
+                        <button class="按鈕 奢華金填滿按鈕 寬度百分百 p-2" onclick="執行彈窗登入()">
+                            確認登入
+                        </button>
+                        <div class="text-end mt-2">
+                            <a href="#" class="text-white-50 小字體" style="text-decoration: none;"
+                                onclick="切換忘記密碼表單(true)">忘記密碼？</a>
+                        </div>
 
-<div class="modal fade" id="註冊彈窗" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content 奢華毛玻璃卡片">
-            <div class="modal-header border-0">
-                <h5 class="modal-title 金色文字" style="letter-spacing: 3px;">SIGN UP</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <div class="mb-3">
-                    <label class="白色透明文字 小字體 mb-2 d-block">您的稱呼 (Username)</label>
-                    <input type="text" id="註冊-帳號" class="表單元件 毛玻璃輸入框" placeholder="例：酒神戴奧尼索斯">
-                </div>
-                <div class="mb-3">
-                    <label class="白色透明文字 小字體 mb-2 d-block">電子信箱 (Email)</label>
-                    <input type="email" id="註冊-信箱" class="表單元件 毛玻璃輸入框" placeholder="example@email.com">
-                </div>
-                <div class="mb-4">
-                    <label class="白色透明文字 小字體 mb-2 d-block">設定密碼 (Password)</label>
-                    <input type="password" id="註冊-密碼" class="表單元件 毛玻璃輸入框" placeholder="請設定 6 位數以上密碼">
-                </div>
-                <button class="按鈕 奢華金填滿按鈕 寬度百分百" onclick="執行API註冊()">
-                    確認註冊
-                </button>
-                <div class="text-center mt-3">
-                    <small class="白色透明文字">已經有帳號了？ 
-                        <a href="#" class="金色文字" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#登入彈窗">直接登入</a>
-                    </small>
+                        <div class="mt-3 text-center">
+                            <span class="text-white-50 小字體">或使用第三方登入</span>
+                        </div>
+                        <div class="mt-2 d-flex justify-content-center">
+                            <div id="g_id_onload"
+                                data-client_id="32725652104-7gn6vkkqvsg79ps5r40jpkqmpfm5p1an.apps.googleusercontent.com"
+                                data-context="signin" data-ux_mode="popup" data-callback="處理Google登入回應"
+                                data-auto_prompt="false">
+                            </div>
+                            <div class="g_id_signin" data-type="standard" data-shape="rectangular"
+                                data-theme="filled_black" data-text="signin_with" data-size="large"
+                                data-logo_alignment="left">
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <small class="白色透明文字">還沒加入圖書館？
+                                <a href="#" class="金色文字" style="text-decoration: none;" data-bs-toggle="modal"
+                                    data-bs-target="#註冊彈窗">立即註冊</a>
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- 忘記密碼區塊 (預設隱藏) -->
+                    <div id="忘記密碼區塊" style="display: none;">
+                        <div class="mb-4 text-center">
+                            <p class="text-white-50 小字體">請輸入您註冊時使用的 Email，我們將寄送重設密碼的連結給您。</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="白色透明文字 小字體 mb-2 d-block">電子信箱 (Email)</label>
+                            <input type="email" id="忘記密碼-信箱" class="表單元件 毛玻璃輸入框 p-2 text-white w-100"
+                                placeholder="請輸入您的 Email">
+                        </div>
+                        <button class="按鈕 奢華金填滿按鈕 寬度百分百 p-2" id="發送重設信按鈕" onclick="執行忘記密碼()">
+                            發送重設信件
+                        </button>
+                        <div class="text-center mt-4">
+                            <a href="#" class="text-white-50 小字體" style="text-decoration: none;"
+                                onclick="切換忘記密碼表單(false)"><i class="bi bi-arrow-left me-1"></i> 返回登入</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-
-
-<div id="通知框"></div>
-
-
-<div class="酒類警語固定欄">
-    <div class="警語容器">
-        <span class="警語文字">禁止酒駕</span>
-        <span class="警語分隔線">|</span>
-        <span class="警語文字">飲酒過量，有害健康</span>
-    </div>
-</div>
-
-<!-- 註冊彈窗 -->
-
-<div class="modal fade" id="註冊彈窗" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content 奢華毛玻璃卡片">
-            <div class="modal-header border-0">
-                <h5 class="modal-title 金色文字" style="letter-spacing: 3px;">SIGN UP</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <div class="mb-3">
-                    <label class="白色透明文字 小字體 mb-2 d-block">您的稱呼 (Username)</label>
-                    <input type="text" id="註冊-帳號" class="表單元件 毛玻璃輸入框" placeholder="例：酒神戴奧尼索斯">
+    <div class="modal fade" id="註冊彈窗" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content 奢華毛玻璃卡片">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title 金色文字" style="letter-spacing: 3px;">SIGN UP</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="mb-3">
-                    <label class="白色透明文字 小字體 mb-2 d-block">電子信箱 (Email)</label>
-                    <input type="email" id="註冊-信箱" class="表單元件 毛玻璃輸入框" placeholder="example@email.com">
-                </div>
-                <div class="mb-4">
-                    <label class="白色透明文字 小字體 mb-2 d-block">設定密碼 (Password)</label>
-                    <input type="password" id="註冊-密碼" class="表單元件 毛玻璃輸入框" placeholder="請設定 6 位數以上密碼">
-                </div>
-                <button class="按鈕 奢華金填滿按鈕 寬度百分百" onclick="執行API註冊()">
-                    確認註冊
-                </button>
-                <div class="text-center mt-3">
-                    <small class="白色透明文字">已經有帳號了？ <a href="#" class="金色文字" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#登入彈窗">直接登入</a></small>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="白色透明文字 小字體 mb-2 d-block">您的稱呼 (Username)</label>
+                        <input type="text" id="註冊-帳號" class="表單元件 毛玻璃輸入框" placeholder="例：酒神戴奧尼索斯">
+                    </div>
+                    <div class="mb-3">
+                        <label class="白色透明文字 小字體 mb-2 d-block">電子信箱 (Email)</label>
+                        <input type="email" id="註冊-信箱" class="表單元件 毛玻璃輸入框" placeholder="example@email.com">
+                    </div>
+                    <div class="mb-4">
+                        <label class="白色透明文字 小字體 mb-2 d-block">設定密碼 (Password)</label>
+                        <input type="password" id="註冊-密碼" class="表單元件 毛玻璃輸入框" placeholder="請設定 6 位數以上密碼">
+                    </div>
+                    <button class="按鈕 奢華金填滿按鈕 寬度百分百" onclick="執行API註冊()">
+                        確認註冊
+                    </button>
+                    <div class="text-center mt-3">
+                        <small class="白色透明文字">已經有帳號了？
+                            <a href="#" class="金色文字" style="text-decoration: none;" data-bs-toggle="modal"
+                                data-bs-target="#登入彈窗">直接登入</a>
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
+    <div id="通知框"></div>
+
+
+    <div class="酒類警語固定欄">
+        <div class="警語容器">
+            <span class="警語文字">禁止酒駕</span>
+            <span class="警語分隔線">|</span>
+            <span class="警語文字">飲酒過量，有害健康</span>
+        </div>
+    </div>
+
+    <!-- 註冊彈窗 -->
+
+    <div class="modal fade" id="註冊彈窗" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content 奢華毛玻璃卡片">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title 金色文字" style="letter-spacing: 3px;">SIGN UP</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="白色透明文字 小字體 mb-2 d-block">您的稱呼 (Username)</label>
+                        <input type="text" id="註冊-帳號" class="表單元件 毛玻璃輸入框" placeholder="例：酒神戴奧尼索斯">
+                    </div>
+                    <div class="mb-3">
+                        <label class="白色透明文字 小字體 mb-2 d-block">電子信箱 (Email)</label>
+                        <input type="email" id="註冊-信箱" class="表單元件 毛玻璃輸入框" placeholder="example@email.com">
+                    </div>
+                    <div class="mb-4">
+                        <label class="白色透明文字 小字體 mb-2 d-block">設定密碼 (Password)</label>
+                        <input type="password" id="註冊-密碼" class="表單元件 毛玻璃輸入框" placeholder="請設定 6 位數以上密碼">
+                    </div>
+                    <button class="按鈕 奢華金填滿按鈕 寬度百分百" onclick="執行API註冊()">
+                        確認註冊
+                    </button>
+                    <div class="text-center mt-3">
+                        <small class="白色透明文字">已經有帳號了？ <a href="#" class="金色文字" style="text-decoration: none;"
+                                data-bs-toggle="modal" data-bs-target="#登入彈窗">直接登入</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -1126,173 +1327,226 @@ body {
 
 
     <script>
-     
-     // ==========================================
-// 🔥 [全域設定] 連線與變數
-// ==========================================
 
-// 1. 設定後端 API 網址 (目前設定為連線到你本地端)
-/* const API_URL = "http://localhost:3000/api"; */
-// 如果要連線到雲端，請把上面那行註解掉，改用下面這行：
-const API_URL = "https://tipsy-server.onrender.com/api";
+        // ==========================================
+        // 🔥 [全域設定] 連線與變數
+        // ==========================================
 
-// 2. 資料庫與狀態變數
-let cocktails = [];        // 存放從後端抓回來的酒單
-let 當前顯示列表 = [];      // 目前畫面上看到的酒 (含篩選後)
-let 當前酒杯ID = null;      // 目前打開的是哪一杯
-let 當前頁碼 = 1;
-const 每頁數量 = 16;
-const 網格容器 = document.getElementById('雞尾酒展示網格');
+        // 1. 設定後端 API 網址 (目前設定為連線到你本地端)
+        /* const API_URL = "http://localhost:3000/api"; */
+        // 如果要連線到雲端，請把上面那行註解掉，改用下面這行：
+        const API_URL = "https://tipsy-server.onrender.com/api";
 
-// ==========================================
-// 🔥 [核心功能] 初始化與資料串接 (Fetch)
-// ==========================================
+        // 2. 資料庫與狀態變數
+        let cocktails = [];        // 存放從後端抓回來的酒單
+        let 當前顯示列表 = [];      // 目前畫面上看到的酒 (含篩選後)
+        let 當前酒杯ID = null;      // 目前打開的是哪一杯
+        let 當前頁碼 = 1;
+        const 每頁數量 = 16;
+        const 網格容器 = document.getElementById('雞尾酒展示網格');
 
-// 1. 網頁載入時要做的事
-window.onload = async function() {
-    // A. 檢查有沒有登入過 (改讀取 Token)
-    const token = localStorage.getItem('tipsy_token');
-    const userStr = localStorage.getItem('tipsy_user');
+        // ==========================================
+        // 🔥 [核心功能] 初始化與資料串接 (Fetch)
+        // ==========================================
 
-    if (token && userStr) {
-        const user = JSON.parse(userStr);
-        console.log("👋 歡迎回來，", user.username);
-        切換至歡迎介面(user);
-        
-        // B. 如果有登入，去後端同步最新的「收藏清單」
-        await 同步最新收藏(token);
-    }
+        // 1. 網頁載入時要做的事
+        window.onload = async function () {
+            // A. 檢查有沒有登入過 (改讀取 Token)
+            const token = localStorage.getItem('tipsy_token');
+            const userStr = localStorage.getItem('tipsy_user');
 
-    // C. 抓取酒單資料
-    串接後端資料();
-};
+            if (token && userStr) {
+                const user = JSON.parse(userStr);
+                console.log("👋 歡迎回來，", user.username);
+                切換至歡迎介面(user);
 
-// 2. 向後端抓取所有酒單 (GET)
-async function 串接後端資料() {
-    try {
-        const response = await fetch(`${API_URL}/cocktails`);
-        cocktails = await response.json();
-        console.log("✅ 成功載入酒單:", cocktails.length, "杯");
-        
-        // 預設顯示全部
-        當前顯示列表 = cocktails;
-        渲染酒卡(當前顯示列表);
-        
-    } catch (error) {
-        console.error("❌ 連線失敗:", error);
-        網格容器.innerHTML = `
+                // B. 如果有登入，去後端同步最新的「收藏清單」
+                await 同步最新收藏(token);
+            }
+
+            // C. 抓取酒單資料
+            串接後端資料();
+        };
+
+        // 2. 向後端抓取所有酒單 (GET)
+        async function 串接後端資料() {
+            try {
+                const response = await fetch(`${API_URL}/cocktails`);
+                cocktails = await response.json();
+                console.log("✅ 成功載入酒單:", cocktails.length, "杯");
+
+                // 預設顯示全部
+                當前顯示列表 = cocktails;
+                渲染酒卡(當前顯示列表);
+
+            } catch (error) {
+                console.error("❌ 連線失敗:", error);
+                網格容器.innerHTML = `
             <div class="text-center mt-5 text-white">
                 <h3>連線失敗 😓</h3>
                 <p>請確認你的後端伺服器 (node server.js) 已經啟動！</p>
             </div>`;
-    }
-}
+            }
+        }
 
-// 3. 同步收藏 (確保手機和電腦收藏同步)
-async function 同步最新收藏(token) {
-    try {
-        const res = await fetch(`${API_URL}/me`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await res.json();
-        if (data.success) {
-            localStorage.setItem('我的收藏清單', JSON.stringify(data.user.favorites));
+        // 3. 同步收藏 (確保手機和電腦收藏同步)
+        async function 同步最新收藏(token) {
+            try {
+                const res = await fetch(`${API_URL}/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    localStorage.setItem('我的收藏清單', JSON.stringify(data.user.favorites));
+                    localStorage.setItem('tipsy_user', JSON.stringify(data.user));
+                }
+            } catch (err) {
+                console.error("同步收藏失敗，可能 Token 過期", err);
+                處理登出(); // 過期就登出
+            }
+        }
+
+        // ==========================================
+        // 🔥 [會員系統] 登入與註冊邏輯
+        // ==========================================
+
+        // 1. 執行註冊 (API)
+        async function 執行API註冊() {
+            const username = document.getElementById('註冊-帳號').value;
+            const email = document.getElementById('註冊-信箱').value;
+            const password = document.getElementById('註冊-密碼').value;
+
+            if (!username || !email || !password) {
+                alert("請填寫完整資訊"); return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    alert("🎉 註冊成功！歡迎加入微醺圖書館");
+                    完成登入程序(data); // 註冊後直接登入
+                    bootstrap.Modal.getInstance(document.getElementById('註冊彈窗')).hide();
+                } else {
+                    alert("註冊失敗：" + data.message);
+                }
+            } catch (err) {
+                alert("系統錯誤，請檢查後端連線");
+            }
+        }
+
+        // 1.5 忘記密碼前端切換邏輯
+        function 切換忘記密碼表單(showForgot) {
+            const loginBlock = document.getElementById('一般登入區塊');
+            const forgotBlock = document.getElementById('忘記密碼區塊');
+            const title = document.querySelector('#登入彈窗 .modal-title');
+
+            if (showForgot) {
+                loginBlock.style.display = 'none';
+                forgotBlock.style.display = 'block';
+                title.innerText = 'FORGOT PASSWORD';
+            } else {
+                loginBlock.style.display = 'block';
+                forgotBlock.style.display = 'none';
+                title.innerText = 'MEMBER LOGIN';
+            }
+        }
+
+        async function 執行忘記密碼() {
+            const email = document.getElementById('忘記密碼-信箱').value;
+            if (!email) {
+                alert("請輸入 Email");
+                return;
+            }
+
+            const btn = document.getElementById('發送重設信按鈕');
+            const originalText = btn.innerText;
+            btn.innerText = "寄送中...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`${API_URL}/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    // 顯示成功訊息並返回登入
+                    顯示通知(data.message || "重設信件已寄出");
+                    切換忘記密碼表單(false);
+                    document.getElementById('忘記密碼-信箱').value = ""; // 清空
+                } else {
+                    alert("發送失敗：" + (data.message || "未知錯誤"));
+                }
+            } catch (err) {
+                alert("連線錯誤，請稍後再試");
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // 2. 執行登入 (API)
+        async function 執行彈窗登入() {
+            const email = document.getElementById('登入-信箱').value;
+            const password = document.getElementById('登入-密碼').value;
+
+            if (!email || !password) {
+                alert("請輸入 Email 和密碼"); return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    完成登入程序(data);
+                    bootstrap.Modal.getInstance(document.getElementById('登入彈窗')).hide();
+                } else {
+                    alert("登入失敗：" + data.message);
+                }
+            } catch (err) {
+                alert("登入連線錯誤，請稍後再試");
+            }
+        }
+
+        // 3. 登入成功後的處理 (存 Token)
+        function 完成登入程序(data) {
+            localStorage.setItem('tipsy_token', data.token);
             localStorage.setItem('tipsy_user', JSON.stringify(data.user));
+            // 後端回傳的 favorites 才是最新的
+            localStorage.setItem('我的收藏清單', JSON.stringify(data.user.favorites || []));
+
+            切換至歡迎介面(data.user);
+            顯示通知(`歡迎回來，${data.user.username}`);
+            渲染酒卡(當前顯示列表); // 重畫畫面，讓愛心亮起來
         }
-    } catch (err) {
-        console.error("同步收藏失敗，可能 Token 過期", err);
-        處理登出(); // 過期就登出
-    }
-}
 
-// ==========================================
-// 🔥 [會員系統] 登入與註冊邏輯
-// ==========================================
-
-// 1. 執行註冊 (API)
-async function 執行API註冊() {
-    const username = document.getElementById('註冊-帳號').value;
-    const email = document.getElementById('註冊-信箱').value;
-    const password = document.getElementById('註冊-密碼').value;
-
-    if(!username || !email || !password) {
-        alert("請填寫完整資訊"); return;
-    }
-
-    try {
-        const res = await fetch(`${API_URL}/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
-        });
-        const data = await res.json();
-
-        if (data.success) {
-            alert("🎉 註冊成功！歡迎加入微醺圖書館");
-            完成登入程序(data); // 註冊後直接登入
-            bootstrap.Modal.getInstance(document.getElementById('註冊彈窗')).hide();
-        } else {
-            alert("註冊失敗：" + data.message);
+        // 4. 登出
+        function 處理登出() {
+            localStorage.removeItem('tipsy_token');
+            localStorage.removeItem('tipsy_user');
+            localStorage.removeItem('我的收藏清單');
+            location.reload();
         }
-    } catch (err) {
-        alert("系統錯誤，請檢查後端連線");
-    }
-}
 
-// 2. 執行登入 (API)
-async function 執行彈窗登入() {
-    const email = document.getElementById('登入-信箱').value;
-    const password = document.getElementById('登入-密碼').value;
+        // 5. 更新側邊欄顯示
+        function 切換至歡迎介面(user) {
+            const 會員區塊 = document.querySelector('.會員中心區');
+            const 收藏數 = JSON.parse(localStorage.getItem('我的收藏清單'))?.length || 0;
 
-    if(!email || !password) {
-        alert("請輸入 Email 和密碼"); return;
-    }
-
-    try {
-        const res = await fetch(`${API_URL}/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-
-        if (data.success) {
-            完成登入程序(data);
-            bootstrap.Modal.getInstance(document.getElementById('登入彈窗')).hide();
-        } else {
-            alert("登入失敗：" + data.message);
-        }
-    } catch (err) {
-        alert("登入連線錯誤，請稍後再試");
-    }
-}
-
-// 3. 登入成功後的處理 (存 Token)
-function 完成登入程序(data) {
-    localStorage.setItem('tipsy_token', data.token);
-    localStorage.setItem('tipsy_user', JSON.stringify(data.user));
-    // 後端回傳的 favorites 才是最新的
-    localStorage.setItem('我的收藏清單', JSON.stringify(data.user.favorites || []));
-    
-    切換至歡迎介面(data.user);
-    顯示通知(`歡迎回來，${data.user.username}`);
-    渲染酒卡(當前顯示列表); // 重畫畫面，讓愛心亮起來
-}
-
-// 4. 登出
-function 處理登出() {
-    localStorage.removeItem('tipsy_token');
-    localStorage.removeItem('tipsy_user');
-    localStorage.removeItem('我的收藏清單');
-    location.reload(); 
-}
-
-// 5. 更新側邊欄顯示
-function 切換至歡迎介面(user) {
-    const 會員區塊 = document.querySelector('.會員中心區');
-    const 收藏數 = JSON.parse(localStorage.getItem('我的收藏清單'))?.length || 0;
-    
-    會員區塊.innerHTML = `
+            會員區塊.innerHTML = `
       <div class="歡迎容器" style="padding: 10px 0;">
         <h6 class="金色文字" style="margin-bottom: 5px;">晚安，${user.username}</h6>
         <button class="btn p-0 text-start" onclick="只顯示收藏()" style="border:none; background:none;">
@@ -1307,54 +1561,54 @@ function 切換至歡迎介面(user) {
         </div>
       </div>
     `;
-}
+        }
 
-// ==========================================
-// 🔥 [畫面渲染] 渲染、分頁、篩選
-// ==========================================
+        // ==========================================
+        // 🔥 [畫面渲染] 渲染、分頁、篩選
+        // ==========================================
 
-// 1. 渲染酒卡 (畫畫面) - 已修正 ID 問題
-function 渲染酒卡(data) {
-    當前顯示列表 = data;
-    const 總數 = data.length;
-    const 總頁數 = Math.ceil(總數 / 每頁數量) || 1;
-    
-    // 更新頁碼 UI
-    const 總頁數文字 = document.getElementById('總頁數文字');
-    if (總頁數文字) 總頁數文字.innerText = 總頁數;
-    const 頁碼輸入框 = document.getElementById('頁碼輸入框');
-    if (頁碼輸入框) 頁碼輸入框.value = 當前頁碼;
+        // 1. 渲染酒卡 (畫畫面) - 已修正 ID 問題
+        function 渲染酒卡(data) {
+            當前顯示列表 = data;
+            const 總數 = data.length;
+            const 總頁數 = Math.ceil(總數 / 每頁數量) || 1;
 
-    // 計算這一頁要顯示哪些
-    const 開始 = (當前頁碼 - 1) * 每頁數量;
-    const 結束 = 開始 + 每頁數量;
-    const 這一頁的內容 = data.slice(開始, 結束);
+            // 更新頁碼 UI
+            const 總頁數文字 = document.getElementById('總頁數文字');
+            if (總頁數文字) 總頁數文字.innerText = 總頁數;
+            const 頁碼輸入框 = document.getElementById('頁碼輸入框');
+            if (頁碼輸入框) 頁碼輸入框.value = 當前頁碼;
 
-    網格容器.innerHTML = ''; // 清空舊的
+            // 計算這一頁要顯示哪些
+            const 開始 = (當前頁碼 - 1) * 每頁數量;
+            const 結束 = 開始 + 每頁數量;
+            const 這一頁的內容 = data.slice(開始, 結束);
 
-    if (這一頁的內容.length === 0) {
-        網格容器.innerHTML = '<div class="text-white text-center w-100 mt-5">找不到符合條件的調酒。</div>';
-        return;
-    }
+            網格容器.innerHTML = ''; // 清空舊的
 
-    // 開始畫卡片
-    這一頁的內容.forEach(drink => {
-        const col = document.createElement('div');
-        col.className = 'col-6 col-md-4 col-lg-3';
-        
-        // 判斷是否收藏 (從 LocalStorage 讀取)
-        const 收藏清單 = JSON.parse(localStorage.getItem('我的收藏清單')) || [];
-        
-        // 🔥 這裡改用 _id 來判斷，因為後端用的是 MongoDB ID
-        const isFav = 收藏清單.includes(drink._id);
-        
-        const 愛心Class = isFav ? '已收藏' : '';
-        const 愛心Icon = isFav ? 'bi-heart-fill' : 'bi-heart';
-        
-        let 顯示基酒 = Array.isArray(drink.base) ? drink.base.join(' / ') : drink.base;
+            if (這一頁的內容.length === 0) {
+                網格容器.innerHTML = '<div class="text-white text-center w-100 mt-5">找不到符合條件的調酒。</div>';
+                return;
+            }
 
-        // 🔥 注意：這裡的 onclick 改成了傳送 '${drink._id}' (有引號)
-        col.innerHTML = `
+            // 開始畫卡片
+            這一頁的內容.forEach(drink => {
+                const col = document.createElement('div');
+                col.className = 'col-6 col-md-4 col-lg-3';
+
+                // 判斷是否收藏 (從 LocalStorage 讀取)
+                const 收藏清單 = JSON.parse(localStorage.getItem('我的收藏清單')) || [];
+
+                // 🔥 這裡改用 _id 來判斷，因為後端用的是 MongoDB ID
+                const isFav = 收藏清單.includes(drink._id);
+
+                const 愛心Class = isFav ? '已收藏' : '';
+                const 愛心Icon = isFav ? 'bi-heart-fill' : 'bi-heart';
+
+                let 顯示基酒 = Array.isArray(drink.base) ? drink.base.join(' / ') : drink.base;
+
+                // 🔥 注意：這裡的 onclick 改成了傳送 '${drink._id}' (有引號)
+                col.innerHTML = `
             <div class="card 特調酒卡" onclick="顯示詳細資訊('${drink._id}')">
                 <div style="position: relative;">
                     <img src="${drink.img}" class="card-img-top" alt="${drink.name}">
@@ -1370,391 +1624,391 @@ function 渲染酒卡(data) {
                 </div>
             </div>
         `;
-        網格容器.appendChild(col);
-    });
+                網格容器.appendChild(col);
+            });
 
-    // 更新按鈕狀態
-    const 上一頁鈕 = document.getElementById('分頁-上一頁');
-    const 下一頁鈕 = document.getElementById('分頁-下一頁');
-    if (上一頁鈕) 上一頁鈕.disabled = (當前頁碼 === 1);
-    if (下一頁鈕) 下一頁鈕.disabled = (當前頁碼 === 總頁數);
-}
-
-// 2. 切換收藏狀態 (API)
-async function 切換收藏狀態(id, event) {
-    if (event) event.stopPropagation();
-
-    // 🔥 檢查是否有 Token (這是新的驗證方式)
-    const token = localStorage.getItem('tipsy_token');
-    if (!token) {
-        alert("請先登入會員，才能使用收藏功能！");
-        const 登入彈窗實體 = new bootstrap.Modal(document.getElementById('登入彈窗'));
-        登入彈窗實體.show();
-        return;
-    }
-
-    try {
-        // 呼叫後端，這時 id 已經是正確的 _id 了
-        const res = await fetch(`${API_URL}/cocktails/${id}/collect`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        const data = await res.json();
-
-        if (data.success) {
-            // 更新本地清單
-            localStorage.setItem('我的收藏清單', JSON.stringify(data.favorites));
-            
-            // 更新 UI
-            const isFav = data.favorites.includes(String(id)) || data.favorites.includes(id);
-            更新UI狀態(id, isFav);
-            
-            顯示通知(data.message);
-            
-            // 更新側邊欄數字
-            const user = JSON.parse(localStorage.getItem('tipsy_user'));
-            切換至歡迎介面(user);
+            // 更新按鈕狀態
+            const 上一頁鈕 = document.getElementById('分頁-上一頁');
+            const 下一頁鈕 = document.getElementById('分頁-下一頁');
+            if (上一頁鈕) 上一頁鈕.disabled = (當前頁碼 === 1);
+            if (下一頁鈕) 下一頁鈕.disabled = (當前頁碼 === 總頁數);
         }
-    } catch (err) {
-        console.error("收藏操作失敗", err);
-        alert("操作失敗，請檢查網路");
-    }
-}
 
-// 3. 更新 UI 上的愛心圖示
-function 更新UI狀態(id, isFav) {
-    const iconHtml = `<i class="bi ${isFav ? 'bi-heart-fill' : 'bi-heart'} 愛心圖示"></i>`;
-    const action = isFav ? 'add' : 'remove';
-    
-    // 更新列表上的愛心
-    const cardHeart = document.getElementById(`card-heart-${id}`);
-    if (cardHeart) { cardHeart.classList[action]('已收藏'); cardHeart.innerHTML = iconHtml; }
-    
-    // 更新彈窗裡的愛心
-    const modalHeart = document.getElementById('modal-heart-btn');
-    if (modalHeart && 當前酒杯ID === id) { modalHeart.classList[action]('已收藏'); modalHeart.innerHTML = iconHtml; }
-}
+        // 2. 切換收藏狀態 (API)
+        async function 切換收藏狀態(id, event) {
+            if (event) event.stopPropagation();
 
-// 4. 分頁切換器
-function 切換分頁(參數) {
-    if (typeof 參數 === 'number') {
-        執行頁碼切換(參數);
-    } else {
-        切換卡片內容Tab(參數);
-    }
-}
+            // 🔥 檢查是否有 Token (這是新的驗證方式)
+            const token = localStorage.getItem('tipsy_token');
+            if (!token) {
+                alert("請先登入會員，才能使用收藏功能！");
+                const 登入彈窗實體 = new bootstrap.Modal(document.getElementById('登入彈窗'));
+                登入彈窗實體.show();
+                return;
+            }
 
-function 執行頁碼切換(目標頁碼) {
-    const 總頁數 = Math.ceil(當前顯示列表.length / 每頁數量) || 1;
-    if (目標頁碼 > 總頁數) 目標頁碼 = 總頁數;
-    if (目標頁碼 < 1) 目標頁碼 = 1;
-    當前頁碼 = 目標頁碼;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    渲染酒卡(當前顯示列表);
-}
+            try {
+                // 呼叫後端，這時 id 已經是正確的 _id 了
+                const res = await fetch(`${API_URL}/cocktails/${id}/collect`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
 
-// ==========================================
-// 🔥 [輔助功能] 彈窗詳情、篩選、通知
-// ==========================================
+                if (data.success) {
+                    // 更新本地清單
+                    localStorage.setItem('我的收藏清單', JSON.stringify(data.favorites));
 
-const 我的彈窗 = new bootstrap.Modal(document.getElementById('詳情彈窗'));
+                    // 更新 UI
+                    const isFav = data.favorites.includes(String(id)) || data.favorites.includes(id);
+                    更新UI狀態(id, isFav);
 
-// 1. 顯示詳情彈窗 - 已修正 _id 查找問題
-function 顯示詳細資訊(id, isRandom = false) {
-    當前酒杯ID = id;
-    
-    // 🔥 這裡改用 _id 來尋找酒的資料
-    const drink = cocktails.find(item => item._id === id);
-    if (!drink) return;
+                    顯示通知(data.message);
 
-    document.getElementById('彈窗-標題').innerText = drink.name;
-    let modalBase = Array.isArray(drink.base) ? drink.base.join(' / ') : drink.base;
-    document.getElementById('彈窗-基酒').innerText = modalBase;
-    document.getElementById('彈窗-濃度').innerText = drink.abvDisplay;
-    document.getElementById('彈窗-口感').innerText = drink.taste;
-    document.getElementById('彈窗-材料列表').innerText = drink.ingredients;
-    document.getElementById('彈窗-故事文字').innerText = drink.story;
-    
-    // 渲染步驟
-    const 步驟區 = document.getElementById('彈窗-步驟區');
-    步驟區.innerHTML = `
+                    // 更新側邊欄數字
+                    const user = JSON.parse(localStorage.getItem('tipsy_user'));
+                    切換至歡迎介面(user);
+                }
+            } catch (err) {
+                console.error("收藏操作失敗", err);
+                alert("操作失敗，請檢查網路");
+            }
+        }
+
+        // 3. 更新 UI 上的愛心圖示
+        function 更新UI狀態(id, isFav) {
+            const iconHtml = `<i class="bi ${isFav ? 'bi-heart-fill' : 'bi-heart'} 愛心圖示"></i>`;
+            const action = isFav ? 'add' : 'remove';
+
+            // 更新列表上的愛心
+            const cardHeart = document.getElementById(`card-heart-${id}`);
+            if (cardHeart) { cardHeart.classList[action]('已收藏'); cardHeart.innerHTML = iconHtml; }
+
+            // 更新彈窗裡的愛心
+            const modalHeart = document.getElementById('modal-heart-btn');
+            if (modalHeart && 當前酒杯ID === id) { modalHeart.classList[action]('已收藏'); modalHeart.innerHTML = iconHtml; }
+        }
+
+        // 4. 分頁切換器
+        function 切換分頁(參數) {
+            if (typeof 參數 === 'number') {
+                執行頁碼切換(參數);
+            } else {
+                切換卡片內容Tab(參數);
+            }
+        }
+
+        function 執行頁碼切換(目標頁碼) {
+            const 總頁數 = Math.ceil(當前顯示列表.length / 每頁數量) || 1;
+            if (目標頁碼 > 總頁數) 目標頁碼 = 總頁數;
+            if (目標頁碼 < 1) 目標頁碼 = 1;
+            當前頁碼 = 目標頁碼;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            渲染酒卡(當前顯示列表);
+        }
+
+        // ==========================================
+        // 🔥 [輔助功能] 彈窗詳情、篩選、通知
+        // ==========================================
+
+        const 我的彈窗 = new bootstrap.Modal(document.getElementById('詳情彈窗'));
+
+        // 1. 顯示詳情彈窗 - 已修正 _id 查找問題
+        function 顯示詳細資訊(id, isRandom = false) {
+            當前酒杯ID = id;
+
+            // 🔥 這裡改用 _id 來尋找酒的資料
+            const drink = cocktails.find(item => item._id === id);
+            if (!drink) return;
+
+            document.getElementById('彈窗-標題').innerText = drink.name;
+            let modalBase = Array.isArray(drink.base) ? drink.base.join(' / ') : drink.base;
+            document.getElementById('彈窗-基酒').innerText = modalBase;
+            document.getElementById('彈窗-濃度').innerText = drink.abvDisplay;
+            document.getElementById('彈窗-口感').innerText = drink.taste;
+            document.getElementById('彈窗-材料列表').innerText = drink.ingredients;
+            document.getElementById('彈窗-故事文字').innerText = drink.story;
+
+            // 渲染步驟
+            const 步驟區 = document.getElementById('彈窗-步驟區');
+            步驟區.innerHTML = `
         <div class="圖標工具列">
             <span class="工具標籤"><i class="bi bi-funnel"></i> ${drink.method || '基本調製'}</span>
             <span class="工具標籤"><i class="bi bi-cup-straw"></i> ${drink.glass || '適當杯型'}</span>
         </div>
         <ol class="純文字步驟列表">
-            ${(drink.steps && drink.steps.length > 0) 
-                ? drink.steps.map(step => `<li>${step}</li>`).join('') 
-                : '<li style="list-style:none">暫無詳細步驟</li>'}
+            ${(drink.steps && drink.steps.length > 0)
+                    ? drink.steps.map(step => `<li>${step}</li>`).join('')
+                    : '<li style="list-style:none">暫無詳細步驟</li>'}
         </ol>
     `;
 
-    // 處理圖片
-    const imgEl = document.getElementById('彈窗-圖片');
-    imgEl.src = drink.img;
-    
-    // 處理彈窗內的愛心
-    let wrapper = imgEl.closest('.img-container');
-    if (!wrapper) {
-        wrapper = document.createElement('div');
-        wrapper.className = 'img-container';
-        imgEl.parentNode.insertBefore(wrapper, imgEl);
-        wrapper.appendChild(imgEl);
-        const heartBtn = document.createElement('div');
-        heartBtn.id = 'modal-heart-btn';
-        wrapper.appendChild(heartBtn);
-    }
-    
-    const 收藏清單 = JSON.parse(localStorage.getItem('我的收藏清單')) || [];
-    // 🔥 修正 ID 判斷
-    const isFav = 收藏清單.includes(drink._id);
-    const 愛心Class = isFav ? '已收藏' : '';
-    const 愛心Icon = isFav ? 'bi-heart-fill' : 'bi-heart';
+            // 處理圖片
+            const imgEl = document.getElementById('彈窗-圖片');
+            imgEl.src = drink.img;
 
-    const heartBtn = document.getElementById('modal-heart-btn');
-    heartBtn.className = `愛心按鈕 ${愛心Class}`;
-    heartBtn.innerHTML = `<i class="bi ${愛心Icon} 愛心圖示"></i>`;
-    heartBtn.onclick = (e) => 切換收藏狀態(drink._id, e); // 🔥 這裡也傳 _id
+            // 處理彈窗內的愛心
+            let wrapper = imgEl.closest('.img-container');
+            if (!wrapper) {
+                wrapper = document.createElement('div');
+                wrapper.className = 'img-container';
+                imgEl.parentNode.insertBefore(wrapper, imgEl);
+                wrapper.appendChild(imgEl);
+                const heartBtn = document.createElement('div');
+                heartBtn.id = 'modal-heart-btn';
+                wrapper.appendChild(heartBtn);
+            }
 
-    const 重抽按鈕 = document.getElementById('單抽重選按鈕');
-    if (重抽按鈕) 重抽按鈕.style.display = isRandom ? 'block' : 'none';
+            const 收藏清單 = JSON.parse(localStorage.getItem('我的收藏清單')) || [];
+            // 🔥 修正 ID 判斷
+            const isFav = 收藏清單.includes(drink._id);
+            const 愛心Class = isFav ? '已收藏' : '';
+            const 愛心Icon = isFav ? 'bi-heart-fill' : 'bi-heart';
 
-    切換卡片內容Tab('故事');
-    我的彈窗.show();
-}
+            const heartBtn = document.getElementById('modal-heart-btn');
+            heartBtn.className = `愛心按鈕 ${愛心Class}`;
+            heartBtn.innerHTML = `<i class="bi ${愛心Icon} 愛心圖示"></i>`;
+            heartBtn.onclick = (e) => 切換收藏狀態(drink._id, e); // 🔥 這裡也傳 _id
 
-// 2. 切換故事/步驟
-function 切換卡片內容Tab(模式) {
-    const 故事區 = document.getElementById('彈窗-故事文字');
-    const 步驟區 = document.getElementById('彈窗-步驟區');
-    const 鈕故事 = document.getElementById('鈕-故事');
-    const 鈕步驟 = document.getElementById('鈕-步驟');
+            const 重抽按鈕 = document.getElementById('單抽重選按鈕');
+            if (重抽按鈕) 重抽按鈕.style.display = isRandom ? 'block' : 'none';
 
-    if (模式 === '故事') {
-        故事區.style.display = 'block';
-        步驟區.style.display = 'none';
-        鈕故事.classList.add('啟動');
-        鈕步驟.classList.remove('啟動');
-    } else {
-        故事區.style.display = 'none';
-        步驟區.style.display = 'block';
-        鈕故事.classList.remove('啟動');
-        鈕步驟.classList.add('啟動');
-    }
-}
-
-// 3. 篩選邏輯
-function 執行篩選() {
-    const 電腦搜 = document.getElementById('搜尋輸入').value.trim();
-    const 手機搜 = document.getElementById('搜尋輸入_手機') ? document.getElementById('搜尋輸入_手機').value.trim() : '';
-    const 關鍵字 = (電腦搜 || 手機搜).toLowerCase();
-
-    const 取得值 = (電腦ID, 手機ID) => {
-        const 電腦值 = document.getElementById(電腦ID).value;
-        const 手機元件 = document.getElementById(手機ID);
-        const 手機值 = 手機元件 ? 手機元件.value : 'all';
-        return (電腦值 !== 'all') ? 電腦值 : 手機值;
-    };
-
-    const 選到的基酒 = 取得值('篩選-基酒', '篩選-基酒-手機');
-    const 選到的濃度 = 取得值('篩選-濃度', '篩選-濃度-手機');
-    const 選到的口感 = 取得值('篩選-口感', '篩選-口感-手機');
-
-    const 篩選結果 = cocktails.filter(item => {
-        const 名字符合 = item.name.toLowerCase().includes(關鍵字);
-        const 材料符合 = item.ingredients.toLowerCase().includes(關鍵字);
-        const 搜尋符合 = 關鍵字 === "" || 名字符合 || 材料符合;
-
-        let 基酒符合 = (選到的基酒 === 'all') ? true : 
-            (Array.isArray(item.base) ? item.base.includes(選到的基酒) : item.base === 選到的基酒);
-        
-        const 濃度符合 = (選到的濃度 === 'all' || item.abvLevel === 選到的濃度);
-        const 口感符合 = (選到的口感 === 'all' || item.taste === 選到的口感);
-
-        return 搜尋符合 && 基酒符合 && 濃度符合 && 口感符合;
-    });
-
-    當前頁碼 = 1; 
-    渲染酒卡(篩選結果);
-}
-
-// 4. 只顯示收藏
-function 只顯示收藏() {
-    const 收藏清單 = JSON.parse(localStorage.getItem('我的收藏清單')) || [];
-    // 🔥 修正為比對 _id
-    const 收藏的酒 = cocktails.filter(item => 收藏清單.includes(item._id));
-    
-    if (收藏的酒.length === 0) { alert("您目前還沒有收藏任何調酒喔！"); return; }
-    
-    當前頁碼 = 1;
-    渲染酒卡(收藏的酒);
-    
-    const 側邊欄 = bootstrap.Offcanvas.getInstance(document.getElementById('側邊選單本體'));
-    if (側邊欄) 側邊欄.hide();
-    顯示通知(`顯示 ${收藏的酒.length} 杯珍藏調酒`);
-}
-
-// 5. 隨機選酒
-function 隨機選酒邏輯() {
-    if (cocktails.length === 0) return;
-    const 隨機索引 = Math.floor(Math.random() * cocktails.length);
-    const 被抽中的酒 = cocktails[隨機索引];
-    顯示詳細資訊(被抽中的酒._id, true); // 🔥 這裡也傳 _id
-    
-    const 側邊欄 = bootstrap.Offcanvas.getInstance(document.getElementById('側邊選單本體'));
-    if (側邊欄) 側邊欄.hide();
-}
-
-// 6. 其他輔助函式
-function 顯示通知(文字) {
-    const box = document.getElementById('通知框');
-    if (box) { box.innerText = 文字; box.style.opacity = '1'; setTimeout(() => { box.style.opacity = '0'; }, 800); }
-}
-
-function 回到首頁() {
-    document.getElementById('搜尋輸入').value = '';
-    if(document.getElementById('搜尋輸入_手機')) document.getElementById('搜尋輸入_手機').value = '';
-    const ids = ['篩選-基酒', '篩選-濃度', '篩選-口感', '篩選-基酒-手機', '篩選-濃度-手機', '篩選-口感-手機'];
-    ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = 'all';
-    });
-    執行篩選();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// 自動綁定搜尋框事件
-document.addEventListener("DOMContentLoaded", function() {
-    const inputs = document.querySelectorAll('select, input[type="text"]');
-    inputs.forEach(el => {
-        if (el.id.includes('篩選') || el.id.includes('搜尋')) {
-            el.addEventListener('input', 執行篩選);
-            el.addEventListener('change', 執行篩選);
+            切換卡片內容Tab('故事');
+            我的彈窗.show();
         }
-    });
-});
+
+        // 2. 切換故事/步驟
+        function 切換卡片內容Tab(模式) {
+            const 故事區 = document.getElementById('彈窗-故事文字');
+            const 步驟區 = document.getElementById('彈窗-步驟區');
+            const 鈕故事 = document.getElementById('鈕-故事');
+            const 鈕步驟 = document.getElementById('鈕-步驟');
+
+            if (模式 === '故事') {
+                故事區.style.display = 'block';
+                步驟區.style.display = 'none';
+                鈕故事.classList.add('啟動');
+                鈕步驟.classList.remove('啟動');
+            } else {
+                故事區.style.display = 'none';
+                步驟區.style.display = 'block';
+                鈕故事.classList.remove('啟動');
+                鈕步驟.classList.add('啟動');
+            }
+        }
+
+        // 3. 篩選邏輯
+        function 執行篩選() {
+            const 電腦搜 = document.getElementById('搜尋輸入').value.trim();
+            const 手機搜 = document.getElementById('搜尋輸入_手機') ? document.getElementById('搜尋輸入_手機').value.trim() : '';
+            const 關鍵字 = (電腦搜 || 手機搜).toLowerCase();
+
+            const 取得值 = (電腦ID, 手機ID) => {
+                const 電腦值 = document.getElementById(電腦ID).value;
+                const 手機元件 = document.getElementById(手機ID);
+                const 手機值 = 手機元件 ? 手機元件.value : 'all';
+                return (電腦值 !== 'all') ? 電腦值 : 手機值;
+            };
+
+            const 選到的基酒 = 取得值('篩選-基酒', '篩選-基酒-手機');
+            const 選到的濃度 = 取得值('篩選-濃度', '篩選-濃度-手機');
+            const 選到的口感 = 取得值('篩選-口感', '篩選-口感-手機');
+
+            const 篩選結果 = cocktails.filter(item => {
+                const 名字符合 = item.name.toLowerCase().includes(關鍵字);
+                const 材料符合 = item.ingredients.toLowerCase().includes(關鍵字);
+                const 搜尋符合 = 關鍵字 === "" || 名字符合 || 材料符合;
+
+                let 基酒符合 = (選到的基酒 === 'all') ? true :
+                    (Array.isArray(item.base) ? item.base.includes(選到的基酒) : item.base === 選到的基酒);
+
+                const 濃度符合 = (選到的濃度 === 'all' || item.abvLevel === 選到的濃度);
+                const 口感符合 = (選到的口感 === 'all' || item.taste === 選到的口感);
+
+                return 搜尋符合 && 基酒符合 && 濃度符合 && 口感符合;
+            });
+
+            當前頁碼 = 1;
+            渲染酒卡(篩選結果);
+        }
+
+        // 4. 只顯示收藏
+        function 只顯示收藏() {
+            const 收藏清單 = JSON.parse(localStorage.getItem('我的收藏清單')) || [];
+            // 🔥 修正為比對 _id
+            const 收藏的酒 = cocktails.filter(item => 收藏清單.includes(item._id));
+
+            if (收藏的酒.length === 0) { alert("您目前還沒有收藏任何調酒喔！"); return; }
+
+            當前頁碼 = 1;
+            渲染酒卡(收藏的酒);
+
+            const 側邊欄 = bootstrap.Offcanvas.getInstance(document.getElementById('側邊選單本體'));
+            if (側邊欄) 側邊欄.hide();
+            顯示通知(`顯示 ${收藏的酒.length} 杯珍藏調酒`);
+        }
+
+        // 5. 隨機選酒
+        function 隨機選酒邏輯() {
+            if (cocktails.length === 0) return;
+            const 隨機索引 = Math.floor(Math.random() * cocktails.length);
+            const 被抽中的酒 = cocktails[隨機索引];
+            顯示詳細資訊(被抽中的酒._id, true); // 🔥 這裡也傳 _id
+
+            const 側邊欄 = bootstrap.Offcanvas.getInstance(document.getElementById('側邊選單本體'));
+            if (側邊欄) 側邊欄.hide();
+        }
+
+        // 6. 其他輔助函式
+        function 顯示通知(文字) {
+            const box = document.getElementById('通知框');
+            if (box) { box.innerText = 文字; box.style.opacity = '1'; setTimeout(() => { box.style.opacity = '0'; }, 800); }
+        }
+
+        function 回到首頁() {
+            document.getElementById('搜尋輸入').value = '';
+            if (document.getElementById('搜尋輸入_手機')) document.getElementById('搜尋輸入_手機').value = '';
+            const ids = ['篩選-基酒', '篩選-濃度', '篩選-口感', '篩選-基酒-手機', '篩選-濃度-手機', '篩選-口感-手機'];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = 'all';
+            });
+            執行篩選();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 自動綁定搜尋框事件
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('select, input[type="text"]');
+            inputs.forEach(el => {
+                if (el.id.includes('篩選') || el.id.includes('搜尋')) {
+                    el.addEventListener('input', 執行篩選);
+                    el.addEventListener('change', 執行篩選);
+                }
+            });
+        });
 
 
-// ==========================================
-// 🔥 [新增功能區] 滑動切換、頁碼防呆、微醺套餐
-// (絕對不影響上方原有程式碼)
-// ==========================================
+        // ==========================================
+        // 🔥 [新增功能區] 滑動切換、頁碼防呆、微醺套餐
+        // (絕對不影響上方原有程式碼)
+        // ==========================================
 
-// ------------------------------------------
-// 1. 切換相鄰調酒 (左右箭頭 + 手機滑動)
-// ------------------------------------------
-function 切換相鄰調酒(方向) {
-    if (!當前酒杯ID) return;
-    
-    const currentIndex = 當前顯示列表.findIndex(drink => drink._id === 當前酒杯ID);
-    if (currentIndex === -1) return;
+        // ------------------------------------------
+        // 1. 切換相鄰調酒 (左右箭頭 + 手機滑動)
+        // ------------------------------------------
+        function 切換相鄰調酒(方向) {
+            if (!當前酒杯ID) return;
 
-    let nextIndex = currentIndex + 方向;
-    
-    if (nextIndex < 0) nextIndex = 當前顯示列表.length - 1;
-    if (nextIndex >= 當前顯示列表.length) nextIndex = 0;
+            const currentIndex = 當前顯示列表.findIndex(drink => drink._id === 當前酒杯ID);
+            if (currentIndex === -1) return;
 
-    const nextDrink = 當前顯示列表[nextIndex];
-    顯示詳細資訊(nextDrink._id);
-}
+            let nextIndex = currentIndex + 方向;
 
-// 監聽鍵盤左右方向鍵
-document.addEventListener('keydown', function(event) {
-    const modalElement = document.getElementById('詳情彈窗');
-    if (modalElement && modalElement.classList.contains('show')) {
-        if (event.key === 'ArrowLeft') 切換相鄰調酒(-1);
-        else if (event.key === 'ArrowRight') 切換相鄰調酒(1);
-    }
-});
+            if (nextIndex < 0) nextIndex = 當前顯示列表.length - 1;
+            if (nextIndex >= 當前顯示列表.length) nextIndex = 0;
 
-// 手機版：觸控滑動切換邏輯
-let 觸控起始X = 0;
-let 觸控結束X = 0;
-const 彈窗元素 = document.getElementById('詳情彈窗');
+            const nextDrink = 當前顯示列表[nextIndex];
+            顯示詳細資訊(nextDrink._id);
+        }
 
-if (彈窗元素) {
-    彈窗元素.addEventListener('touchstart', (e) => {
-        觸控起始X = e.changedTouches[0].screenX;
-    }, { passive: true });
+        // 監聽鍵盤左右方向鍵
+        document.addEventListener('keydown', function (event) {
+            const modalElement = document.getElementById('詳情彈窗');
+            if (modalElement && modalElement.classList.contains('show')) {
+                if (event.key === 'ArrowLeft') 切換相鄰調酒(-1);
+                else if (event.key === 'ArrowRight') 切換相鄰調酒(1);
+            }
+        });
 
-    彈窗元素.addEventListener('touchend', (e) => {
-        觸控結束X = e.changedTouches[0].screenX;
-        const 滑動距離 = 觸控結束X - 觸控起始X;
-        if (滑動距離 < -50) 切換相鄰調酒(1);  // 向左滑 -> 看下一杯
-        if (滑動距離 > 50) 切換相鄰調酒(-1); // 向右滑 -> 看上一杯
-    }, { passive: true });
-}
+        // 手機版：觸控滑動切換邏輯
+        let 觸控起始X = 0;
+        let 觸控結束X = 0;
+        const 彈窗元素 = document.getElementById('詳情彈窗');
 
-// ------------------------------------------
-// 2. 處理頁碼輸入跳轉 (精準防呆)
-// ------------------------------------------
-function 處理輸入跳轉(輸入值) {
-    const 總數 = 當前顯示列表.length;
-    const 總頁數 = Math.ceil(總數 / 每頁數量) || 1;
-    const 目標頁 = parseInt(輸入值, 10);
-    const 輸入框 = document.getElementById('頁碼輸入框');
-    
-    // 防呆 A：如果輸入非數字 (例如中英文字)
-    if (isNaN(目標頁)) {
-        輸入框.value = 當前頁碼; // 恢復原本頁碼
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // 跳回最上面
-        return;
-    }
+        if (彈窗元素) {
+            彈窗元素.addEventListener('touchstart', (e) => {
+                觸控起始X = e.changedTouches[0].screenX;
+            }, { passive: true });
 
-    // 防呆 B：輸入負數或 0，跳回第一頁
-    if (目標頁 < 1) {
-        切換分頁(1);
-    } 
-    // 防呆 C：輸入超過最大頁數，跳到最後一頁
-    else if (目標頁 > 總頁數) {
-        切換分頁(總頁數);
-    } 
-    // 正常範圍：跳轉到指定頁面
-    else {
-        切換分頁(目標頁);
-    }
-}
+            彈窗元素.addEventListener('touchend', (e) => {
+                觸控結束X = e.changedTouches[0].screenX;
+                const 滑動距離 = 觸控結束X - 觸控起始X;
+                if (滑動距離 < -50) 切換相鄰調酒(1);  // 向左滑 -> 看下一杯
+                if (滑動距離 > 50) 切換相鄰調酒(-1); // 向右滑 -> 看上一杯
+            }, { passive: true });
+        }
 
-// ------------------------------------------
-// 3. 漸進式層次微醺套餐 (Low -> Med -> High)
-// ------------------------------------------
-function 生成微醺套餐() {
-    // 依據酒精濃度分類
-    const 低濃度酒單 = cocktails.filter(c => c.abvLevel === 'low');
-    const 中濃度酒單 = cocktails.filter(c => c.abvLevel === 'med');
-    const 高濃度酒單 = cocktails.filter(c => c.abvLevel === 'high');
+        // ------------------------------------------
+        // 2. 處理頁碼輸入跳轉 (精準防呆)
+        // ------------------------------------------
+        function 處理輸入跳轉(輸入值) {
+            const 總數 = 當前顯示列表.length;
+            const 總頁數 = Math.ceil(總數 / 每頁數量) || 1;
+            const 目標頁 = parseInt(輸入值, 10);
+            const 輸入框 = document.getElementById('頁碼輸入框');
 
-    if (低濃度酒單.length === 0 || 中濃度酒單.length === 0 || 高濃度酒單.length === 0) {
-        alert("目前酒單庫資料不足以生成漸進套餐，請稍後再試！");
-        return;
-    }
+            // 防呆 A：如果輸入非數字 (例如中英文字)
+            if (isNaN(目標頁)) {
+                輸入框.value = 當前頁碼; // 恢復原本頁碼
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // 跳回最上面
+                return;
+            }
 
-    // 隨機抽出一杯的工具
-    const 抽出一杯 = (陣列) => 陣列[Math.floor(Math.random() * 陣列.length)];
-    
-    // 確保三杯來自不同層次，絕對不會重複
-    const 套餐 = [
-        抽出一杯(低濃度酒單),
-        抽出一杯(中濃度酒單),
-        抽出一杯(高濃度酒單)
-    ];
+            // 防呆 B：輸入負數或 0，跳回第一頁
+            if (目標頁 < 1) {
+                切換分頁(1);
+            }
+            // 防呆 C：輸入超過最大頁數，跳到最後一頁
+            else if (目標頁 > 總頁數) {
+                切換分頁(總頁數);
+            }
+            // 正常範圍：跳轉到指定頁面
+            else {
+                切換分頁(目標頁);
+            }
+        }
 
-    const 容器 = document.getElementById('套餐內容容器');
-    if (!容器) return;
-    容器.innerHTML = ''; 
+        // ------------------------------------------
+        // 3. 漸進式層次微醺套餐 (Low -> Med -> High)
+        // ------------------------------------------
+        function 生成微醺套餐() {
+            // 依據酒精濃度分類
+            const 低濃度酒單 = cocktails.filter(c => c.abvLevel === 'low');
+            const 中濃度酒單 = cocktails.filter(c => c.abvLevel === 'med');
+            const 高濃度酒單 = cocktails.filter(c => c.abvLevel === 'high');
 
-    const 順序標籤 = ['🍸 第一杯：喚醒 (微醺)', '🍷 第二杯：漸入 (適中)', '🥃 第三杯：沉醉 (濃烈)'];
+            if (低濃度酒單.length === 0 || 中濃度酒單.length === 0 || 高濃度酒單.length === 0) {
+                alert("目前酒單庫資料不足以生成漸進套餐，請稍後再試！");
+                return;
+            }
 
-    // 渲染卡片
-    套餐.forEach((drink, index) => {
-        const 顯示基酒 = Array.isArray(drink.base) ? drink.base.join(' / ') : drink.base;
-        const col = document.createElement('div');
-        col.className = 'col-md-4';
-        
-        col.innerHTML = `
+            // 隨機抽出一杯的工具
+            const 抽出一杯 = (陣列) => 陣列[Math.floor(Math.random() * 陣列.length)];
+
+            // 確保三杯來自不同層次，絕對不會重複
+            const 套餐 = [
+                抽出一杯(低濃度酒單),
+                抽出一杯(中濃度酒單),
+                抽出一杯(高濃度酒單)
+            ];
+
+            const 容器 = document.getElementById('套餐內容容器');
+            if (!容器) return;
+            容器.innerHTML = '';
+
+            const 順序標籤 = ['🍸 第一杯：喚醒 (微醺)', '🍷 第二杯：漸入 (適中)', '🥃 第三杯：沉醉 (濃烈)'];
+
+            // 渲染卡片
+            套餐.forEach((drink, index) => {
+                const 顯示基酒 = Array.isArray(drink.base) ? drink.base.join(' / ') : drink.base;
+                const col = document.createElement('div');
+                col.className = 'col-md-4';
+
+                col.innerHTML = `
             <div class="card 特調酒卡" style="background: #2a2a2a; cursor: pointer; height: 100%;" onclick="顯示詳細資訊('${drink._id}')">
                 <img src="${drink.img}" class="card-img-top" alt="${drink.name}" style="height: 200px; object-fit: cover;">
                 <div class="card-body text-center">
@@ -1767,98 +2021,124 @@ function 生成微醺套餐() {
                 </div>
             </div>
         `;
-        容器.appendChild(col);
-    });
+                容器.appendChild(col);
+            });
 
-    // 關閉側邊欄
-    const 側邊欄元件 = document.getElementById('側邊選單本體');
-    if (側邊欄元件) {
-        const 側邊欄 = bootstrap.Offcanvas.getInstance(側邊欄元件);
-        if (側邊欄) 側邊欄.hide();
-    }
+            // 關閉側邊欄
+            const 側邊欄元件 = document.getElementById('側邊選單本體');
+            if (側邊欄元件) {
+                const 側邊欄 = bootstrap.Offcanvas.getInstance(側邊欄元件);
+                if (側邊欄) 側邊欄.hide();
+            }
 
-    // 開啟套餐彈窗 (安全寫法：防止重複生成黑色遮罩)
-    
-    const 套餐彈窗元素 = document.getElementById('套餐彈窗');
-    const 套餐彈窗實體 = bootstrap.Modal.getOrCreateInstance(套餐彈窗元素);
-    
-    // 只有在彈窗「還沒打開」的時候，才需要執行 show() 把黑布鋪出來
-    if (!套餐彈窗元素.classList.contains('show')) {
-        套餐彈窗實體.show();
-    }
-}
+            // 開啟套餐彈窗 (安全寫法：防止重複生成黑色遮罩)
 
-// ==========================================
-// 🔥 [修復] 完美實現「雙重彈窗」：詳情疊在套餐之上
-// ==========================================
-document.addEventListener("DOMContentLoaded", function() {
-    const 詳情彈窗元素 = document.getElementById('詳情彈窗');
-    const 套餐彈窗元素 = document.getElementById('套餐彈窗');
+            const 套餐彈窗元素 = document.getElementById('套餐彈窗');
+            const 套餐彈窗實體 = bootstrap.Modal.getOrCreateInstance(套餐彈窗元素);
 
-    if (詳情彈窗元素 && 套餐彈窗元素) {
-        
-        // 1. 當「詳情彈窗」打開時：強制把圖層拉到最高
-        詳情彈窗元素.addEventListener('show.bs.modal', function () {
-            // Bootstrap 預設圖層高度是 1055，我們把它拉高到 1080 蓋過套餐
-            this.style.zIndex = '1080';
-            
-            // 等待幾毫秒讓 Bootstrap 生成黑色半透明遮罩後，把最上面那個遮罩的圖層也拉高
-            setTimeout(() => {
-                const 遮罩們 = document.querySelectorAll('.modal-backdrop');
-                if (遮罩們.length > 0) {
-                    // 抓取最後一個生成的遮罩（屬於詳情彈窗的）
-                    遮罩們[遮罩們.length - 1].style.zIndex = '1075';
-                }
-            }, 50);
-        });
+            // 只有在彈窗「還沒打開」的時候，才需要執行 show() 把黑布鋪出來
+            if (!套餐彈窗元素.classList.contains('show')) {
+                套餐彈窗實體.show();
+            }
+        }
 
-        // 2. 當「詳情彈窗」關閉時：善後處理
-        詳情彈窗元素.addEventListener('hidden.bs.modal', function () {
-            // 把圖層高度還原
-            this.style.zIndex = '';
-            
-            // 💡 關鍵修復：Bootstrap 關閉上方彈窗時，會誤以為「所有」彈窗都關了，導致底下的套餐不能滑動。
-            // 所以我們檢查一下：如果套餐還開著，就強制讓網頁保持「彈窗開啟中」的狀態。
-            if (套餐彈窗元素.classList.contains('show')) {
-                document.body.classList.add('modal-open');
+        // ==========================================
+        // 🔥 [修復] 完美實現「雙重彈窗」：詳情疊在套餐之上
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", function () {
+            const 詳情彈窗元素 = document.getElementById('詳情彈窗');
+            const 套餐彈窗元素 = document.getElementById('套餐彈窗');
+
+            if (詳情彈窗元素 && 套餐彈窗元素) {
+
+                // 1. 當「詳情彈窗」打開時：強制把圖層拉到最高
+                詳情彈窗元素.addEventListener('show.bs.modal', function () {
+                    // Bootstrap 預設圖層高度是 1055，我們把它拉高到 1080 蓋過套餐
+                    this.style.zIndex = '1080';
+
+                    // 等待幾毫秒讓 Bootstrap 生成黑色半透明遮罩後，把最上面那個遮罩的圖層也拉高
+                    setTimeout(() => {
+                        const 遮罩們 = document.querySelectorAll('.modal-backdrop');
+                        if (遮罩們.length > 0) {
+                            // 抓取最後一個生成的遮罩（屬於詳情彈窗的）
+                            遮罩們[遮罩們.length - 1].style.zIndex = '1075';
+                        }
+                    }, 50);
+                });
+
+                // 2. 當「詳情彈窗」關閉時：善後處理
+                詳情彈窗元素.addEventListener('hidden.bs.modal', function () {
+                    // 把圖層高度還原
+                    this.style.zIndex = '';
+
+                    // 💡 關鍵修復：Bootstrap 關閉上方彈窗時，會誤以為「所有」彈窗都關了，導致底下的套餐不能滑動。
+                    // 所以我們檢查一下：如果套餐還開著，就強制讓網頁保持「彈窗開啟中」的狀態。
+                    if (套餐彈窗元素.classList.contains('show')) {
+                        document.body.classList.add('modal-open');
+                    }
+                });
+
             }
         });
 
-    }
-});
 
 
+        // ==========================================
+        // 🔥 [新增] 處理 Google 登入回應
+        // ==========================================
+        async function 處理Google登入回應(response) {
+            // response.credential 就是 Google 發給我們的臨時識別證
+            const googleToken = response.credential;
 
-// ==========================================
-// 🔥 [新增] 處理 Google 登入回應
-// ==========================================
-async function 處理Google登入回應(response) {
-    // response.credential 就是 Google 發給我們的臨時識別證
-    const googleToken = response.credential;
+            try {
+                const res = await fetch(`${API_URL}/google-login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: googleToken })
+                });
 
-    try {
-        const res = await fetch(`${API_URL}/google-login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: googleToken })
-        });
+                const data = await res.json();
 
-        const data = await res.json();
-
-        if (data.success) {
-            alert("🎉 Google 登入成功！");
-            完成登入程序(data);
-            bootstrap.Modal.getInstance(document.getElementById('登入彈窗')).hide();
-        } else {
-            alert("登入失敗：" + data.message);
+                if (data.success) {
+                    alert("🎉 Google 登入成功！");
+                    完成登入程序(data);
+                    bootstrap.Modal.getInstance(document.getElementById('登入彈窗')).hide();
+                } else {
+                    alert("登入失敗：" + data.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("系統連線錯誤");
+            }
         }
-    } catch (err) {
-        console.error(err);
-        alert("系統連線錯誤");
-    }
-}
 
+
+        // ==========================================
+        // 🔥 [第一階段] 18 歲年齡驗證邏輯
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function () {
+            const isAdult = localStorage.getItem('isAdult');
+            const ageModalElement = document.getElementById('ageVerificationModal');
+            const ageModal = new bootstrap.Modal(ageModalElement);
+
+            // 如果沒紀錄，則強制顯示 Modal
+            if (isAdult !== 'true') {
+                ageModal.show();
+            }
+
+            // 點擊「我已滿 18 歲」
+            document.getElementById('btnAdultConfirm').addEventListener('click', function () {
+                localStorage.setItem('isAdult', 'true');
+                ageModal.hide();
+            });
+
+            // 點擊「我未滿 18 歲」
+            document.getElementById('btnUnderageExit').addEventListener('click', function () {
+                window.location.href = 'https://www.google.com';
+            });
+        });
 
     </script>
 </body>
+
 </html>
