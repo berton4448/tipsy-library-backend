@@ -10,6 +10,8 @@ const auth = require('./middleware/auth');
 // --- 引入新套件 ---
 const bcrypt = require('bcryptjs'); // 加密用的
 const jwt = require('jsonwebtoken'); // 產生 Token 用的
+const { OAuth2Client } = require('google-auth-library');
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const rateLimit = require('express-rate-limit'); // 防駭限流
 /* const mongoSanitize = require('express-mongo-sanitize'); // 先暫時關閉避免報錯 */
 
@@ -162,6 +164,66 @@ app.post('/api/login', async (req, res) => {
     } catch (error) {
         console.error("登入錯誤:", error);
         res.status(500).json({ message: '伺服器錯誤' });
+    }
+});
+
+
+// 2.5 [Google 登入 API] POST /api/google-login
+app.post('/api/google-login', async (req, res) => {
+    try {
+        const { token } = req.body; // 接收前端傳來的 Google Token
+
+        // 1. 向 Google 驗證這張 Token 是不是真的
+        const ticket = await googleClient.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        // 2. 拿出使用者的 Google 資料
+        const payload = ticket.getPayload();
+        const { sub: googleId, email, name, picture } = payload;
+
+        // 3. 去我們的資料庫找找看，這個 Email 或 Google ID 註冊過了嗎？
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            // 4. 如果是第一次來，自動幫他註冊一個新帳號！
+            user = await User.create({
+                username: name,
+                email: email,
+                googleId: googleId,
+                avatar: picture // 可以存 Google 的大頭貼
+                // 注意：因為是 Google 登入，所以我們不需要存密碼
+            });
+        } else if (!user.googleId) {
+            // 如果他以前是用帳號密碼註冊的，順便幫他綁定 Google ID
+            user.googleId = googleId;
+            await user.save();
+        }
+
+        // 5. 發放我們自己的微醺 Token
+        const jwtToken = jwt.sign(
+            { id: user._id }, 
+            process.env.JWT_SECRET || 'secret123', 
+            { expiresIn: '1d' }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Google 登入成功！',
+            token: jwtToken,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+                avatar: user.avatar
+            }
+        });
+
+    } catch (error) {
+        console.error("Google 登入錯誤:", error);
+        res.status(401).json({ message: 'Google 驗證失敗' });
     }
 });
 
