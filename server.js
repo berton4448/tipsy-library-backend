@@ -263,8 +263,8 @@ app.post('/api/forgot-password', async (req, res) => {
         });
 
         // 寄送 Email (包含指向重設密碼頁面的連結)
-        // 根據需求使用 localhost:3000 作為前端網址
-        const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+        // 使用 127.0.0.1:5500 作為前端網址以供 Live Server 測試
+        const clientUrl = process.env.CLIENT_URL || 'http://127.0.0.1:5500';
         const resetUrl = `${clientUrl}/reset-password.html?token=${resetToken}`;
 
         const message = `
@@ -278,7 +278,7 @@ app.post('/api/forgot-password', async (req, res) => {
                     請點擊下方的封印，以重啟您專屬的微醺之門。
                 </p>
                 <a href="${resetUrl}" style="background-color: #d4af37; color: #000; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 16px; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">
-                    重設我的密碼
+                    點此重設您的密碼
                 </a>
                 <p style="margin-top: 40px; font-size: 0.8em; color: #666; line-height: 1.5;">
                     ※ 此連結的法力將於 <strong>10 分鐘</strong>後失效。<br>
