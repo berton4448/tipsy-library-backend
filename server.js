@@ -263,15 +263,30 @@ app.post('/api/forgot-password', async (req, res) => {
         });
 
         // 寄送 Email (包含指向重設密碼頁面的連結)
-        const clientUrl = process.env.CLIENT_URL || 'http://127.0.0.1:5500'; // 前端網址，如果有部署請在 .env 修改
+        // 根據需求使用 localhost:3000 作為前端網址
+        const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
         const resetUrl = `${clientUrl}/reset-password.html?token=${resetToken}`;
 
         const message = `
-            <h2>重設密碼要求</h2>
-            <p>您收到這封信是因為有人要求重設您的密碼。</p>
-            <p>請點擊下方按鈕以重設密碼 (連結 10 分鐘內有效):</p>
-            <a href="${resetUrl}" style="background-color: #d4af37; color: #000; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px;">重設密碼</a>
-            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">如果按鈕無法點擊，請複製並貼上以下網址：<br>${resetUrl}</p>
+            <div style="background-color: #121212; color: #f5f5f7; padding: 40px 20px; font-family: 'Noto Serif TC', serif, sans-serif; text-align: center; border: 1px solid #d4af37; max-width: 600px; margin: 0 auto; border-radius: 8px;">
+                <h2 style="color: #d4af37; letter-spacing: 2px;">微醺圖書館</h2>
+                <hr style="border: 0; border-top: 1px solid rgba(212, 175, 55, 0.3); margin: 20px 0;">
+                <h3 style="color: #f5f5f7; font-weight: normal;">忘記了通往館內的密語嗎？</h3>
+                <p style="color: #a0a0a0; line-height: 1.6; margin-bottom: 30px; font-size: 15px;">
+                    夜深了，別讓迷失的記憶阻擋您品酩的時光。<br>
+                    我們收到了一份為您重新設定密碼的請求。<br>
+                    請點擊下方的封印，以重啟您專屬的微醺之門。
+                </p>
+                <a href="${resetUrl}" style="background-color: #d4af37; color: #000; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 16px; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">
+                    重設我的密碼
+                </a>
+                <p style="margin-top: 40px; font-size: 0.8em; color: #666; line-height: 1.5;">
+                    ※ 此連結的法力將於 <strong>10 分鐘</strong>後失效。<br>
+                    若您未曾提出此請求，請忽略這封信件。<br><br>
+                    若按鈕無法點擊，請複製以下網址至瀏覽器：<br>
+                    <span style="color: #d4af37; word-break: break-all;">${resetUrl}</span>
+                </p>
+            </div>
         `;
 
         await transporter.sendMail({
