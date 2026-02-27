@@ -1660,16 +1660,15 @@
                 const heartClass = isCollected ? '已收藏' : '';
                 const heartIcon = isCollected ? 'bi-heart-fill text-danger' : 'bi-heart';
 
-                col.innerHTML = `
-                <div class="card 特調酒卡">
+               col.innerHTML = `
+                <div class="card 特調酒卡" onclick="顯示詳細資訊('${drink._id}')">
                     <div class="position-relative">
                         <img src="${drink.img || 'https://via.placeholder.com/300x400?text=No+Image'}" class="card-img-top" alt="${drink.name}">
-                        <!-- 愛心按鈕 -->
                         <div id="card-heart-${drink._id}" class="愛心按鈕 ${heartClass}" onclick="切換收藏狀態('${drink._id}', event)">
                             <i class="bi ${heartIcon} 愛心圖示"></i>
                         </div>
                     </div>
-                    <div class="card-body" onclick="顯示詳細資訊('${drink._id}')">
+                    <div class="card-body">
                         <h5 class="card-title">${drink.name}</h5>
                         <p class="卡片資訊小字 mb-0">${drink.abvDisplay || ''} · ${drink.taste || ''}</p>
                     </div>
@@ -1808,8 +1807,57 @@
         };
 
         // 2. 切換收藏狀態 (API)
+        // 2. 切換收藏狀態 (API)
         async function 切換收藏狀態(id, event) {
+            // 確保有傳入 event 才阻擋冒泡，避免直接呼叫時報錯
             if (event) event.stopPropagation();
+
+            const token = localStorage.getItem('tipsy_token');
+            if (!token) {
+                alert("請先登入會員，才能使用收藏功能！");
+                const 登入彈窗實體 = new bootstrap.Modal(document.getElementById('登入彈窗'));
+                登入彈窗實體.show();
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/cocktails/${id}/collect`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                // 防呆：伺服器若直接死機 (500錯誤)，強制拋出例外
+                if (!res.ok) {
+                    throw new Error(`伺服器回應異常，狀態碼: ${res.status}`);
+                }
+
+                const data = await res.json();
+
+                if (data.success) {
+                    // 更新本地清單
+                    localStorage.setItem('我的收藏清單', JSON.stringify(data.favorites));
+
+                    // 更新 UI
+                    const isFav = data.favorites.includes(String(id)) || data.favorites.includes(id);
+                    更新UI狀態(id, isFav);
+
+                    顯示通知(data.message);
+
+                    // 更新側邊欄數字
+                    const user = JSON.parse(localStorage.getItem('tipsy_user'));
+                    切換至歡迎介面(user);
+                } else {
+                    // 🔥 關鍵修復：如果後端回傳失敗，必須跳出警告！
+                    alert("收藏失敗：" + (data.message || "未知錯誤"));
+                }
+            } catch (err) {
+                console.error("收藏操作失敗", err);
+                alert("操作失敗，請檢查網路連線或後端伺服器狀態！");
+            }
+        }
 
             // 🔥 檢查是否有 Token (這是新的驗證方式)
             const token = localStorage.getItem('tipsy_token');
@@ -1849,7 +1897,7 @@
                 console.error("收藏操作失敗", err);
                 alert("操作失敗，請檢查網路");
             }
-        }
+        
 
         // 3. 更新 UI 上的愛心圖示
         function 更新UI狀態(id, isFav) {

@@ -468,8 +468,14 @@ app.get('/api/cocktails', async (req, res) => {
 // 💡 注意：這裡加了 auth，代表只有登入的人才能按收藏
 app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
     try {
-        const cocktailId = req.params.id; // 從網址拿到酒的 ID
-        const userId = req.user._id; // 從 auth 保全拿到這是誰
+        const cocktailId = req.params.id; 
+        
+        // 修正這裡：同時支援 req.user._id 或 req.user.id，避免 undefined
+        const userId = req.user._id || req.user.id; 
+
+        if (!userId) {
+            return res.status(401).json({ success: false, message: '無法識別使用者身分，請重新登入' });
+        }
 
         // 1. 先確認這杯酒存不存在 (避免收藏到幽靈)
         const cocktail = await Cocktail.findById(cocktailId);
