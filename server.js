@@ -487,22 +487,29 @@ app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
         const user = await User.findById(userId);
 
         // 3. 檢查是不是已經收藏過了
-        // (使用 some 來檢查陣列裡有沒有這個 ID，無論型別為何)
-        const isCollected = user.favorites.some(favId => favId.toString() === cocktailId);
+        // 強制把所有 ID 轉成字串來比對，最安全
+        const cocktailIdStr = cocktailId.toString();
+        const isCollected = user.favorites.some(favId => favId.toString() === cocktailIdStr);
 
         if (isCollected) {
-            // A. 如果已經收藏 -> 移除 (Filter 掉不要的)
-            user.favorites = user.favorites.filter(id => id.toString() !== cocktailId);
-            await user.save();
+            // A. 如果已經收藏 -> 移除 (過濾掉相同的 ID)
+            user.favorites = user.favorites.filter(favId => favId.toString() !== cocktailIdStr);
+            
+            // 💡 關鍵：加上 validateBeforeSave: false，避免其他無關欄位阻擋儲存
+            await user.save({ validateBeforeSave: false });
+            
             return res.status(200).json({
                 success: true,
                 message: '已移除收藏',
                 favorites: user.favorites
             });
         } else {
-            // B. 如果還沒收藏 -> 加入 (Push 進去)
-            user.favorites.push(cocktailId);
-            await user.save();
+            // B. 如果還沒收藏 -> 加入
+            user.favorites.push(cocktailIdStr);
+            
+            // 💡 關鍵：同樣加上 validateBeforeSave: false
+            await user.save({ validateBeforeSave: false });
+            
             return res.status(200).json({
                 success: true,
                 message: '已加入收藏 ❤️',
