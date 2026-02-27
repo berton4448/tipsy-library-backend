@@ -53,7 +53,7 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), async (req, 
             try {
                 // 從資料庫找出該名使用者並升級為乾爹 (使用精準更新避開驗證)
                 const updateQuery = { $set: { isSponsor: true } };
-                
+
                 // 如果有傳回總金額，使用 $inc 自動累加
                 if (session.amount_total) {
                     updateQuery.$inc = { totalDonation: session.amount_total / 100 };
@@ -481,8 +481,8 @@ app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
         const user = await User.findById(userId);
 
         // 3. 檢查是不是已經收藏過了
-        // (使用 includes 來檢查陣列裡有沒有這個 ID)
-        const isCollected = user.favorites.includes(cocktailId);
+        // (使用 some 來檢查陣列裡有沒有這個 ID，無論型別為何)
+        const isCollected = user.favorites.some(favId => favId.toString() === cocktailId);
 
         if (isCollected) {
             // A. 如果已經收藏 -> 移除 (Filter 掉不要的)
