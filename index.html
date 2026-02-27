@@ -1660,16 +1660,15 @@
                 const heartClass = isCollected ? '已收藏' : '';
                 const heartIcon = isCollected ? 'bi-heart-fill text-danger' : 'bi-heart';
 
-                col.innerHTML = `
-                <div class="card 特調酒卡">
+               col.innerHTML = `
+                <div class="card 特調酒卡" onclick="顯示詳細資訊('${drink._id}')">
                     <div class="position-relative">
                         <img src="${drink.img || 'https://via.placeholder.com/300x400?text=No+Image'}" class="card-img-top" alt="${drink.name}">
-                        <!-- 愛心按鈕 -->
                         <div id="card-heart-${drink._id}" class="愛心按鈕 ${heartClass}" onclick="切換收藏狀態('${drink._id}', event)">
                             <i class="bi ${heartIcon} 愛心圖示"></i>
                         </div>
                     </div>
-                    <div class="card-body" onclick="顯示詳細資訊('${drink._id}')">
+                    <div class="card-body">
                         <h5 class="card-title">${drink.name}</h5>
                         <p class="卡片資訊小字 mb-0">${drink.abvDisplay || ''} · ${drink.taste || ''}</p>
                     </div>
