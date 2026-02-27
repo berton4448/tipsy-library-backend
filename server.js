@@ -15,14 +15,71 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const rateLimit = require('express-rate-limit'); // 防駭限流
 const crypto = require('crypto'); // 產生隨機 Token 用的
 const nodemailer = require('nodemailer'); // 寄發 Email 用的
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Stripe 金流
 /* const mongoSanitize = require('express-mongo-sanitize'); // 先暫時關閉避免報錯 */
 
 // --- 引入 User 模型 ---
 const User = require('./models/User');
 
-const port = 3000;
+// 讓伺服器優先使用雲端環境指定的 PORT，如果沒有（本地端）才用 3000
+const port = process.env.PORT || 3000;
 
 app.use(cors());
+
+// --- Stripe Webhook (必須放在 express.json 之前) ---
+app.post('/api/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+    const rawBody = req.body;
+    const signature = req.headers['stripe-signature'];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    if (!webhookSecret) {
+        console.error('⚠️ 找不到 STRIPE_WEBHOOK_SECRET！');
+        return res.status(400).send('Webhook Secret Not Set');
+    }
+
+    let event;
+    try {
+        event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+    } catch (err) {
+        console.error(`⚠️ Webhook 簽章驗證失敗:`, err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === 'checkout.session.completed') {
+        const session = event.data.object;
+        const userId = session.metadata?.userId;
+
+        if (userId) {
+            try {
+                // 從資料庫找出該名使用者並升級為乾爹 (使用精準更新避開驗證)
+                const updateQuery = { $set: { isSponsor: true } };
+                
+                // 如果有傳回總金額，使用 $inc 自動累加
+                if (session.amount_total) {
+                    updateQuery.$inc = { totalDonation: session.amount_total / 100 };
+                }
+
+                const updatedUser = await User.findByIdAndUpdate(
+                    userId,
+                    updateQuery,
+                    { new: true } // 不加 runValidators，直接強制更新
+                );
+
+                if (updatedUser) {
+                    // 容錯處理：如果舊帳號沒名字，改顯示 Email
+                    const displayName = updatedUser.username || updatedUser.email || '神秘客';
+                    console.log(`🎉 恭喜！使用者 ${displayName} 成為微醺乾爹！`);
+                } else {
+                    console.log(`⚠️ 找不到使用者 ${userId}，無法升級。`);
+                }
+            } catch (error) {
+                console.error('更新乾爹狀態失敗:', error);
+            }
+        }
+    }
+    res.json({ received: true });
+});
+
 app.use(express.json());
 
 // --- 資安設定 ---
@@ -159,7 +216,8 @@ app.post('/api/login', async (req, res) => {
                 id: user._id,
                 username: user.username,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                isSponsor: user.isSponsor
             }
         });
 
@@ -219,7 +277,8 @@ app.post('/api/google-login', async (req, res) => {
                 username: user.username,
                 email: user.email,
                 role: user.role,
-                avatar: user.avatar
+                avatar: user.avatar,
+                isSponsor: user.isSponsor
             }
         });
 
@@ -450,6 +509,155 @@ app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
         res.status(500).json({ message: '伺服器錯誤' });
     }
 });
+
+// ==========================================
+// 🛡️ CMS 後台管理路由 (Admin Routes)
+// ==========================================
+
+// 權限驗證：只允許總管訪問
+const adminAuth = (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        res.status(403).json({ success: false, message: '權限不足：您不是微醺圖書館總管！' });
+    }
+};
+
+// 1. [新增酒譜] POST /api/admin/cocktails
+app.post('/api/admin/cocktails', auth, adminAuth, async (req, res) => {
+    try {
+        const newCocktail = new Cocktail(req.body);
+
+        // 如果沒有輸入自訂 ID，自動抓取目前最大 ID + 1
+        if (!newCocktail.id) {
+            const lastCocktail = await Cocktail.findOne().sort('-id');
+            newCocktail.id = lastCocktail && lastCocktail.id ? lastCocktail.id + 1 : 1;
+        }
+
+        await newCocktail.save();
+        res.status(201).json({ success: true, message: '成功新增一杯酒譜！', cocktail: newCocktail });
+    } catch (error) {
+        console.error("【新增酒譜】錯誤:", error);
+        res.status(500).json({ success: false, message: '新增失敗，伺服器發生錯誤' });
+    }
+});
+
+// 2. [更新特定酒譜] PUT /api/admin/cocktails/:id
+app.put('/api/admin/cocktails/:id', auth, adminAuth, async (req, res) => {
+    try {
+        const cocktailId = req.params.id; // 這是 MongoDB 的 _id
+
+        // 使用 findByIdAndUpdate 更新，並設定 { new: true } 來回傳更新後的資料
+        const updatedCocktail = await Cocktail.findByIdAndUpdate(
+            cocktailId,
+            req.body,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedCocktail) {
+            return res.status(404).json({ success: false, message: '找不到此特定酒譜' });
+        }
+
+        res.status(200).json({ success: true, message: '酒譜更新成功！', cocktail: updatedCocktail });
+    } catch (error) {
+        console.error("【更新酒譜】錯誤:", error);
+        res.status(500).json({ success: false, message: '更新失敗，伺服器發生錯誤' });
+    }
+});
+
+// 3. [刪除特定酒譜] DELETE /api/admin/cocktails/:id
+app.delete('/api/admin/cocktails/:id', auth, adminAuth, async (req, res) => {
+    try {
+        const cocktailId = req.params.id; // 這是 MongoDB 的 _id
+        const deletedCocktail = await Cocktail.findByIdAndDelete(cocktailId);
+
+        if (!deletedCocktail) {
+            return res.status(404).json({ success: false, message: '找不到此特定酒譜，可能已被刪除' });
+        }
+
+        res.status(200).json({ success: true, message: '酒譜已成功刪除！' });
+    } catch (error) {
+        console.error("【刪除酒譜】錯誤:", error);
+        res.status(500).json({ success: false, message: '刪除失敗，伺服器發生錯誤' });
+    }
+});
+
+
+// ==========================================
+// 💳 贊助系統 (Stripe 金流)
+// ==========================================
+
+// [產生 Stripe 結帳頁面] POST /api/create-checkout-session
+// 1. 掛載 auth，只有登入會員才能贊助
+// 2. 由於這裡在 /api/ 的範圍內，已經受到 limiter (15 分鐘 100 次) 的保護
+app.post('/api/create-checkout-session', auth, async (req, res) => {
+    try {
+        const { amount } = req.body;
+
+        console.log("👉 [Stripe] 收到前端請求的 amount:", amount);
+        console.log("👉 [Stripe] amount 的型別是:", typeof amount);
+
+        // --- 嚴格數值清洗 (Sanitization) ---
+        // 1. 檢查是否為 Number 型別 (阻擋 String, Object, Boolean)
+        if (typeof amount !== 'number') {
+            console.error("❌ 金流錯誤: 型別不正確!");
+            return res.status(400).json({ success: false, message: '金額格式錯誤：必須為數字型態' });
+        }
+
+        // 2. 檢查是否為 NaN 或 Infinity
+        if (!Number.isFinite(amount) || Number.isNaN(amount)) {
+            return res.status(400).json({ success: false, message: '金額數值異常' });
+        }
+
+        // 3. 阻擋小數點與科學記號 (必須是純浮點整數)
+        if (!Number.isInteger(amount)) {
+            return res.status(400).json({ success: false, message: '金額必須為整數，不支援小數點' });
+        }
+
+        // 4. 驗證範圍：地板 50，天花板 100,000，防止 Overflow
+        if (amount < 50) {
+            return res.status(400).json({ success: false, message: '贊助金額不得低於 NTD 50' });
+        }
+        if (amount > 100000) {
+            return res.status(400).json({ success: false, message: '單筆贊助上限為 NTD 100,000' });
+        }
+
+        // --- 呼叫 Stripe API 建立結帳會話 ---
+        // 注意：TWD 為零小數貨幣，所以 amount 傳 50 就是 50 元。
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'twd',
+                        product_data: {
+                            name: '微醺圖書館 - 贊助支持',
+                            description: '每一杯微醺，都是對我們最大的鼓勵。'
+                        },
+                        unit_amount: amount * 100
+                    },
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            metadata: {
+                userId: req.user._id.toString()
+            },
+            // 由於不知道具體部署網址，這裡以目前的來源 (req.headers.origin) 為主，並 fallback 到本地端
+            success_url: `${req.headers.origin || 'http://localhost:5500'}?success=true`,
+            cancel_url: `${req.headers.origin || 'http://localhost:5500'}?canceled=true`,
+            customer_email: req.user.email // 帶入目前登入會員的 Email，可加快結帳速度
+        });
+
+        // 將結帳網址回傳給前端
+        res.status(200).json({ success: true, url: session.url });
+
+    } catch (error) {
+        console.error("【Stripe 結帳】錯誤:", error.message);
+        res.status(500).json({ success: false, message: '金流服務暫時無法使用，請稍後再試' });
+    }
+});
+
 
 // 啟動伺服器
 app.listen(port, () => {

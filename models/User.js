@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   // --- 1. 基本身分 (Identity) ---
-  username: { 
-    type: String, 
-    required: [true, '請輸入使用者名稱'] 
+  username: {
+    type: String,
+    required: [true, '請輸入使用者名稱']
   },
-  email: { 
-    type: String, 
-    required: [true, '請輸入 Email'], 
+  email: {
+    type: String,
+    required: [true, '請輸入 Email'],
     unique: true, // 確保 Email 不重複
     lowercase: true,
     trim: true
   },
-  password: { 
+  password: {
     type: String,
     select: false // 資安設定：查詢時預設不顯示密碼
   },
-  avatar: { 
-    type: String, 
+  avatar: {
+    type: String,
     default: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" // 預設大頭貼
   },
 
@@ -27,19 +27,23 @@ const userSchema = new mongoose.Schema({
   googleId: String, // 存 Google 給的 ID，如果有這欄位，password 可能是空的
 
   // --- 3. 商業邏輯 (Business Logic) ---
-  role: { 
-    type: String, 
-    enum: ['user', 'vip', 'admin'], 
-    default: 'user' 
+  role: {
+    type: String,
+    enum: ['user', 'vip', 'admin'],
+    default: 'user'
+  },
+  isSponsor: {
+    type: Boolean,
+    default: false
   },
   totalDonation: { // 乾爹贊助總金額 (為金流鋪路)
-    type: Number, 
-    default: 0 
+    type: Number,
+    default: 0
   },
   favorites: [ // 個人酒櫃 (關聯到 Cocktail)
-    { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Cocktail' 
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Cocktail'
     }
   ],
 
@@ -51,9 +55,9 @@ const userSchema = new mongoose.Schema({
   loginAttempts: { type: Number, default: 0 }, // 登入失敗次數
   lockUntil: Date, // 帳號被鎖定到什麼時候
 
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

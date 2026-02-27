@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微醺圖書館 | 總管後台 (CMS)</title>
+  <!-- 引入 Bootstrap 5 與圖示 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- 與前台一致的優雅字體 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --黑色: #121212;
+      --卡片背景色: #1e1e1e;
+      --奢華金: #D4AF37;
+      --次要文字色: #a0a0a0;
+    }
+
+    body {
+      background-color: var(--黑色);
+      color: #f5f5f7;
+      font-family: 'Noto Serif TC', serif;
+    }
+
+    /* ----- 核心通用設定 (沿用前台風格) ----- */
+    .金色文字 {
+      color: var(--奢華金);
+    }
+
+    .白色透明文字 {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .奢華金填滿按鈕 {
+      background-color: var(--奢華金);
+      color: #000;
+      font-weight: bold;
+      border: none;
+      transition: 0.3s;
+    }
+
+    .奢華金填滿按鈕:hover {
+      background-color: #c5a059;
+      color: #000;
+    }
+
+    .奢毛玻璃卡片 {
+      background-color: rgba(26, 26, 26, 0.8) !important;
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--奢華金);
+      color: #fff;
+    }
+
+    .毛玻璃輸入框 {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    .毛玻璃輸入框:focus {
+      background-color: #222;
+      border-color: var(--奢華金);
+      box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+      color: #fff;
+    }
+
+    /* 導覽列與排版 */
+    .頂部控制列 {
+      background: rgba(30, 30, 30, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* 表格優化 (深色設計) */
+    .table-dark {
+      --bs-table-bg: var(--卡片背景色);
+      --bs-table-striped-bg: #2a2a2a;
+      border-color: #333;
+    }
+
+    td {
+      vertical-align: middle;
+    }
+
+    /* 圖片小縮圖 */
+    .admin-img-thumb {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--奢華金);
+    }
+
+    /* 標籤小圖示 */
+    .晶片標籤 {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--奢華金);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    /* 自訂 Modal Header / Footer 線條 */
+    .modal-header,
+    .modal-footer {
+      border-color: rgba(212, 175, 55, 0.2);
+    }
+
+    /* 全域通知 (Toast) */
+    #通知框 {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(20, 20, 20, 0.95);
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 50px;
+      border: 1px solid var(--奢華金);
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    /* 在暗色背景中，form-control 的文字顏色 */
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.3) !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 頂部導覽列 -->
+  <div class="頂部控制列">
+    <div class="container-fluid px-4 px-md-5">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h4 class="m-0 金色文字" style="letter-spacing: 2px;">
+          <i class="bi bi-gear-fill me-2"></i>微醺圖書館 - 總管後台
+        </h4>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-warning" onclick="導回首頁()">
+            <i class="bi bi-house-door me-1"></i> 返回圖書館
+          </button>
+          <button class="btn btn-outline-secondary text-white" onclick="執行登出()">
+            <i class="bi bi-box-arrow-right me-1"></i> 登出
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主控台區塊 -->
+  <div class="container-fluid px-4 px-md-5 py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="text-white">館藏酒譜列表</h5>
+      <button class="btn 奢華金填滿按鈕" onclick="開啟新增模式()">
+        <i class="bi bi-plus-lg me-1"></i> 新增酒譜
+      </button>
+    </div>
+
+    <!-- 卡片與表格 -->
+    <div class="card bg-transparent border-0">
+      <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+          <thead>
+            <tr class="text-center" style="border-bottom: 2px solid var(--奢華金);">
+              <th>ID</th>
+              <th>視覺</th>
+              <th>酒名</th>
+              <th>基酒 (Base)</th>
+              <th>濃度 (ABV)</th>
+              <th>風味 (Taste)</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="酒譜列表容器" class="text-center">
+            <tr>
+              <td colspan="7" class="py-5 text-white-50">載入酒譜資料中...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新增 / 編輯 表單彈窗 (Modal) -->
+  <div class="modal fade" id="酒譜表單彈窗" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content 奢毛玻璃卡片">
+        <div class="modal-header">
+          <h5 class="modal-title 金色文字" id="表單標題" style="font-weight: bold; letter-spacing: 2px;">新增酒譜</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="酒譜表單">
+            <!-- 隱藏的 MongoDB _id -->
+            <input type="hidden" id="form-_id">
+
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="白色透明文字 mb-1">自訂 ID 型號</label>
+                <input type="number" id="form-id" class="form-control 毛玻璃輸入框" placeholder="例: 1 (選填)">
+              </div>
+              <div class="col-md-9">
+                <label class="白色透明文字 mb-1">酒名 (Name)</label>
+                <input type="text" id="form-name" class="form-control 毛玻璃輸入框" required
+                  placeholder="例: 經典馬丁尼 Classic Martini">
+              </div>
+
+              <div class="col-md-4">
+                <label class="白色透明文字 mb-1">基酒 (Base)</label>
+                <input type="text" id="form-base" class="form-control 毛玻璃輸入框" placeholder="陣列請以逗號分隔 (例: Gin,Vermouth)">
+                <small class="text-white-50 ms-1" style="font-size: 0.75rem;">以半形逗點分隔多項</small>
+              </div>
+              <div class="col-md-4">
+                <label class="白色透明文字 mb-1">濃度分類 (abvLevel)</label>
+                <select id="form-abvLevel" class="form-select 毛玻璃輸入框 text-white">
+                  <option style="color:black" value="low">low (低濃度)</option>
+                  <option style="color:black" value="med">med (中等濃度)</option>
+                  <option style="color:black" value="high">high (高濃度)</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="白色透明文字 mb-1">濃度顯示 (abvDisplay)</label>
+                <input type="text" id="form-abvDisplay" class="form-control 毛玻璃輸入框" placeholder="例: 35%">
+              </div>
+
+              <div class="col-md-4">
+                <label class="白色透明文字 mb-1">風味 (Taste)</label>
+                <select id="form-taste" class="form-select 毛玻璃輸入框 text-white">
+                  <option style="color:black" value="酸甜/果香">酸甜/果香</option>
+                  <option style="color:black" value="辛辣/不甜">辛辣/不甜</option>
+                  <option style="color:black" value="清爽/氣泡">清爽/氣泡</option>
+                  <option style="color:black" value="苦甜/大人味">苦甜/大人味</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="白色透明文字 mb-1">技法 (Method)</label>
+                <input type="text" id="form-method" class="form-control 毛玻璃輸入框" placeholder="例: Shake / Stir">
+              </div>
+              <div class="col-md-4">
+                <label class="白色透明文字 mb-1">杯型 (Glass)</label>
+                <input type="text" id="form-glass" class="form-control 毛玻璃輸入框" placeholder="例: 馬丁尼杯">
+              </div>
+
+              <div class="col-12">
+                <label class="白色透明文字 mb-1">材料 (Ingredients)</label>
+                <input type="text" id="form-ingredients" class="form-control 毛玻璃輸入框" placeholder="例: 琴酒 60ml, 苦艾酒 15ml">
+              </div>
+
+              <div class="col-12">
+                <label class="白色透明文字 mb-1">圖片網址 (Image URL)</label>
+                <input type="text" id="form-img" class="form-control 毛玻璃輸入框" placeholder="https://...">
+              </div>
+
+              <div class="col-12">
+                <label class="白色透明文字 mb-1">靈魂故事 (Story)</label>
+                <textarea id="form-story" class="form-control 毛玻璃輸入框" rows="3" placeholder="背後的一段故事..."></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="白色透明文字 mb-1">製作細節 (Steps)</label>
+                <textarea id="form-steps" class="form-control 毛玻璃輸入框" rows="4"
+                  placeholder="步驟一&#10;步驟二&#10;步驟三 (請以換行分隔)"></textarea>
+                <small class="text-white-50 ms-1" style="font-size: 0.75rem;">請使用換行符號(Enter)來區分不同步驟</small>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn 奢華金填滿按鈕 px-4" id="儲存表單按鈕" onclick="執行儲存()">儲存酒譜</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 刪除確認彈窗 (Modal) -->
+  <div class="modal fade" id="刪除確認彈窗" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content 奢毛玻璃卡片">
+        <div class="modal-header border-0">
+          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>警告</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          確定要從酒窖中刪除 <strong class="金色文字" id="刪除酒名提示"></strong> 嗎？<br>
+          此操作將無法復原。
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-danger px-4" id="確認刪除按鈕">確認刪除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 通知小視窗 -->
+  <div id="通知框"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ==========================================
+    // 🛠️ CMS 核心邏輯
+    // ==========================================
+
+    const API_URL = "http://localhost:3000/api";
+    let 所有酒譜 = [];
+    let 編輯中MongoDB的ID = null;
+
+    // 【安全防護】進入畫面先檢查權限
+    window.onload = function () {
+      const token = localStorage.getItem('tipsy_token');
+      const userStr = localStorage.getItem('tipsy_user');
+
+      if (!token || !userStr) {
+        alert("無憑證，請先登入會員。即將導回首頁！");
+        window.location.href = "index.html";
+        return;
+      }
+
+      const user = JSON.parse(userStr);
+      if (user.role !== 'admin') {
+        alert("權限不足：您不是微醺圖書館總管！");
+        window.location.href = "index.html";
+        return;
+      }
+
+      // 抓取館藏資料
+      獲取所有酒譜();
+    };
+
+    function 導回首頁() {
+      window.location.href = "index.html";
+    }
+
+    function 執行登出() {
+      localStorage.removeItem('tipsy_token');
+      localStorage.removeItem('tipsy_user');
+      localStorage.removeItem('我的收藏清單');
+      導回首頁();
+    }
+
+    // ==========================================
+    // 📡 API 串接段落
+    // ==========================================
+
+    async function 獲取所有酒譜() {
+      try {
+        const res = await fetch(`${API_URL}/cocktails`);
+        所有酒譜 = await res.json();
+        渲染列表(所有酒譜);
+      } catch (err) {
+        console.error("載入失敗", err);
+        顯示通知("資料連線異常");
+      }
+    }
+
+    function 渲染列表(data) {
+      const tbody = document.getElementById('酒譜列表容器');
+      tbody.innerHTML = '';
+
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-5 text-white-50">酒窖中空無一物，快去新增吧。</td></tr>`;
+        return;
+      }
+
+      data.forEach(item => {
+        // 處理 Base 標籤 rendering
+        let baseYtml = '';
+        if (Array.isArray(item.base)) {
+          baseYtml = item.base.map(b => `<span class="晶片標籤 me-1">${b}</span>`).join('');
+        } else {
+          baseYtml = `<span class="晶片標籤">${item.base || '無'}</span>`;
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+                    <td class="text-white-50">#${item.id || '--'}</td>
+                    <td>
+                        <img src="${item.img || 'https://via.placeholder.com/60'}" class="admin-img-thumb" alt="未有圖片">
+                    </td>
+                    <td class="金色文字 fw-bold">${item.name}</td>
+                    <td>${baseYtml}</td>
+                    <td class="text-white-50">${item.abvDisplay || '--'}</td>
+                    <td class="text-white-50">${item.taste || '--'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-warning me-2" onclick="準備編輯('${item._id}')">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="準備刪除('${item._id}', '${item.name.replace(/'/g, "\\'")}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ==========================================
+    // ✍️ 表單操作邏輯 (新增 / 編輯)
+    // ==========================================
+
+    const 表單彈窗套件 = new bootstrap.Modal(document.getElementById('酒譜表單彈窗'));
+
+    function 準備編輯(id) {
+      const 找到的酒譜物件 = 所有酒譜.find(item => item._id === id);
+      if (找到的酒譜物件) {
+        開啟編輯模式(找到的酒譜物件);
+      }
+    }
+
+    function 開啟新增模式() {
+      編輯中MongoDB的ID = null;
+      document.getElementById('表單標題').innerText = "新增酒譜";
+      document.getElementById('酒譜表單').reset();
+      // 清除隱藏的 id 確保乾淨
+      document.getElementById('form-_id').value = '';
+      表單彈窗套件.show();
+    }
+
+    function 開啟編輯模式(酒譜物件) {
+      編輯中MongoDB的ID = 酒譜物件._id;
+      document.getElementById('表單標題').innerText = `編輯: ${酒譜物件.name}`;
+
+      // 填入資料
+      document.getElementById('form-_id').value = 酒譜物件._id || '';
+      document.getElementById('form-id').value = 酒譜物件.id || '';
+      document.getElementById('form-name').value = 酒譜物件.name || '';
+
+      // 處理陣列轉換回文字
+      document.getElementById('form-base').value = Array.isArray(酒譜物件.base) ? 酒譜物件.base.join(', ') : (酒譜物件.base || '');
+
+      document.getElementById('form-abvLevel').value = 酒譜物件.abvLevel || 'med';
+      document.getElementById('form-abvDisplay').value = 酒譜物件.abvDisplay || '';
+      document.getElementById('form-taste').value = 酒譜物件.taste || '酸甜/果香';
+      document.getElementById('form-method').value = 酒譜物件.method || '';
+      document.getElementById('form-glass').value = 酒譜物件.glass || '';
+      document.getElementById('form-ingredients').value = 酒譜物件.ingredients || '';
+      document.getElementById('form-img').value = 酒譜物件.img || '';
+      document.getElementById('form-story').value = 酒譜物件.story || '';
+
+      // Steps 可能是陣列，將其用換行符串起以便編輯
+      document.getElementById('form-steps').value = Array.isArray(酒譜物件.steps) ? 酒譜物件.steps.join('\n') : (酒譜物件.steps || '');
+
+      表單彈窗套件.show();
+    }
+
+    async function 執行儲存() {
+      const token = localStorage.getItem('tipsy_token');
+      const btn = document.getElementById('儲存表單按鈕');
+
+      // 取出欄位並轉為系統對應格式
+      const rawBase = document.getElementById('form-base').value;
+      const cleanBase = rawBase.split(',').map(s => s.trim()).filter(s => s); // 轉陣列
+
+      const rawSteps = document.getElementById('form-steps').value;
+      // 支援用換行，或如果有逗號也能分開 (優先使用換行分開)
+      const cleanSteps = rawSteps.split(/\r?\n/).map(s => s.trim()).filter(s => s);
+
+      const payloadData = {
+        id: document.getElementById('form-id').value ? parseInt(document.getElementById('form-id').value) : undefined,
+        name: document.getElementById('form-name').value,
+        base: cleanBase, // array
+        abvLevel: document.getElementById('form-abvLevel').value,
+        abvDisplay: document.getElementById('form-abvDisplay').value,
+        taste: document.getElementById('form-taste').value,
+        method: document.getElementById('form-method').value,
+        glass: document.getElementById('form-glass').value,
+        ingredients: document.getElementById('form-ingredients').value,
+        img: document.getElementById('form-img').value,
+        story: document.getElementById('form-story').value,
+        steps: cleanSteps // array
+      };
+
+      // 基礎驗證
+      if (!payloadData.name) {
+        alert("請至少填入「酒名」");
+        return;
+      }
+
+      const methodType = 編輯中MongoDB的ID ? "PUT" : "POST";
+      const targetUrl = 編輯中MongoDB的ID ? `${API_URL}/admin/cocktails/${編輯中MongoDB的ID}` : `${API_URL}/admin/cocktails`;
+
+      btn.disabled = true;
+      btn.innerText = "儲存中...";
+
+      try {
+        const res = await fetch(targetUrl, {
+          method: methodType,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // 後端驗證身份
+          },
+          body: JSON.stringify(payloadData)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          顯示通知(編輯中MongoDB的ID ? "資料更新成功！" : "新酒譜成功上架！");
+          表單彈窗套件.hide();
+          await 獲取所有酒譜(); // 重新載入
+        } else {
+          alert("儲存失敗：" + (data.message || "權限不足或其他錯誤"));
+        }
+      } catch (err) {
+        console.error("儲存失敗", err);
+        alert("連線系統異常");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "儲存酒譜";
+      }
+    }
+
+    // ==========================================
+    // 🗑️ 刪除操作邏輯
+    // ==========================================
+    const 刪除確認套件 = new bootstrap.Modal(document.getElementById('刪除確認彈窗'));
+    let 待刪除ID = null;
+
+    function 準備刪除(mongoId, name) {
+      待刪除ID = mongoId;
+      document.getElementById('刪除酒名提示').innerText = name;
+      刪除確認套件.show();
+    }
+
+    document.getElementById('確認刪除按鈕').addEventListener('click', async function () {
+      if (!待刪除ID) return;
+      const token = localStorage.getItem('tipsy_token');
+      const btn = this;
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_URL}/admin/cocktails/${待刪除ID}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          顯示通知("酒譜已自酒窖中移除");
+          刪除確認套件.hide();
+          await 獲取所有酒譜();
+        } else {
+          alert("刪除失敗：" + data.message);
+        }
+      } catch (err) {
+        alert("刪除時發生斷線");
+      } finally {
+        btn.disabled = false;
+        待刪除ID = null;
+      }
+    });
+
+    // ==========================================
+    // 💬 共用小工具 (Toast 通知)
+    // ==========================================
+    function 顯示通知(文字) {
+      const box = document.getElementById("通知框");
+      box.textContent = 文字;
+      box.style.opacity = '1';
+      setTimeout(() => {
+        box.style.opacity = '0';
+      }, 3000); // 3 秒後漸漸消失
+    }
+  </script>
+</body>
+
+</html>

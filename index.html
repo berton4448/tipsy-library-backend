@@ -891,12 +891,68 @@
                     <a class="導覽連結 白色文字" href="http://www.google.com/maps/search/%E4%BE%BF%E5%88%A9%E5%95%86%E5%BA%97"
                         target="_blank"><i class="bi bi-geo-alt me-2"></i> 附近的超商</a>
                 </li>
-                <li class="列表項目">
+                <li class="列表項目 底部小間距">
                     <a class="導覽連結 白色文字" href="https://m.uber.com/ul" target="_blank">
                         <i class="bi bi-car-front me-2"></i> 一鍵叫車
                     </a>
                 </li>
+                <li class="列表項目">
+                    <a class="導覽連結 金色文字 fw-bold" href="#" id="開啟贊助按鈕" onclick="切換贊助介面(true)">
+                        <i class="bi bi-cup-hot-fill me-2"></i> 支持我們 (Sponsor)
+                    </a>
+                </li>
             </ul>
+        </div>
+
+        <!-- ==================================== -->
+        <!-- 💰 贊助介面 (隱藏於側邊欄中) -->
+        <!-- ==================================== -->
+        <div class="offcanvas-body" id="贊助介面" style="display: none;">
+            <div class="mb-4">
+                <button class="btn btn-sm btn-outline-secondary text-white mb-3" onclick="切換贊助介面(false)">
+                    <i class="bi bi-arrow-left me-1"></i> 返回選單
+                </button>
+                <h5 class="金色文字 mb-3"><i class="bi bi-cup-hot-fill me-2"></i>請我們喝杯酒</h5>
+                <p class="text-white-50" style="font-size: 0.95rem; line-height: 1.6;">
+                    您的支持是微醺圖書館持續營運的最大動力。<br>
+                    選擇您想贊助的金額，或自訂心意：
+                </p>
+            </div>
+
+            <!-- 快速贊助按鈕 -->
+            <div class="d-flex flex-column gap-3 mb-4">
+                <button class="btn 奢華金填滿按鈕 py-2" onclick="執行贊助(150)">
+                    <i class="bi bi-cup me-1"></i> 贊助 NTD 150 (一杯 Shot)
+                </button>
+                <button class="btn 奢華金填滿按鈕 py-2" onclick="執行贊助(500)">
+                    <i class="bi bi-glass-martini me-1"></i> 贊助 NTD 500 (一杯調酒)
+                </button>
+                <button class="btn 奢華金填滿按鈕 py-2" onclick="執行贊助(1500)">
+                    <i class="bi bi-droplet-half me-1"></i> 贊助 NTD 1500 (一瓶好酒)
+                </button>
+            </div>
+
+            <hr class="border-secondary opacity-50 mb-4">
+
+            <!-- 自訂金額輸入區 -->
+            <div class="mb-3">
+                <label class="白色透明文字 小字體 mb-2 d-block">自訂支持金額 (NTD)</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-dark border-secondary text-white-50">NTD</span>
+                    <input type="number" id="自訂贊助金額" class="form-control 毛玻璃輸入框 text-white"
+                        placeholder="輸入金額字數量 (例如 300)" min="50" step="1">
+                </div>
+            </div>
+            <button class="按鈕 奢華金填滿按鈕 寬度百分百 py-3" onclick="提交自訂贊助()">
+                <i class="bi bi-heart-fill text-danger me-2"></i>立即支持
+            </button>
+
+            <div class="mt-3 text-center border-top border-secondary pt-3">
+                <small class="text-white-50">
+                    <i class="bi bi-shield-check me-1"></i>由 Stripe 提供安全加密支付<br>
+                    ※ 贊助地板價為 NTD 50
+                </small>
+            </div>
         </div>
     </div>
 
@@ -1333,7 +1389,7 @@
         // ==========================================
 
         // 1. 設定後端 API 網址 (目前設定為連線到你本地端)
-         const API_URL = "http://localhost:3000/api"; 
+        const API_URL = "http://localhost:3000/api";
         // 如果要連線到雲端，請把上面那行註解掉，改用下面這行：
         /* const API_URL = "https://tipsy-server.onrender.com/api"; */
 
@@ -1546,9 +1602,11 @@
             const 會員區塊 = document.querySelector('.會員中心區');
             const 收藏數 = JSON.parse(localStorage.getItem('我的收藏清單'))?.length || 0;
 
+            const 乾爹標籤 = user.isSponsor ? '<span class="badge" style="background-color: var(--奢華金); color: #000; margin-left: 8px;">👑 圖書館乾爹</span>' : '';
+
             會員區塊.innerHTML = `
       <div class="歡迎容器" style="padding: 10px 0;">
-        <h6 class="金色文字" style="margin-bottom: 5px;">晚安，${user.username}</h6>
+        <h6 class="金色文字" style="margin-bottom: 5px; display: flex; align-items: center;">晚安，${user.username}${乾爹標籤}</h6>
         <button class="btn p-0 text-start" onclick="只顯示收藏()" style="border:none; background:none;">
             <p class="白色透明文字 小字體" style="font-size: 0.9rem; cursor: pointer;">
                 已收藏 <span class="金色文字" style="text-decoration: underline;">${收藏數}</span> 杯調酒
@@ -1598,41 +1656,156 @@
 
                 // 判斷是否收藏 (從 LocalStorage 讀取)
                 const 收藏清單 = JSON.parse(localStorage.getItem('我的收藏清單')) || [];
+                const isCollected = 收藏清單.includes(drink._id);
+                const heartClass = isCollected ? '已收藏' : '';
+                const heartIcon = isCollected ? 'bi-heart-fill text-danger' : 'bi-heart';
 
-                // 🔥 這裡改用 _id 來判斷，因為後端用的是 MongoDB ID
-                const isFav = 收藏清單.includes(drink._id);
-
-                const 愛心Class = isFav ? '已收藏' : '';
-                const 愛心Icon = isFav ? 'bi-heart-fill' : 'bi-heart';
-
-                let 顯示基酒 = Array.isArray(drink.base) ? drink.base.join(' / ') : drink.base;
-
-                // 🔥 注意：這裡的 onclick 改成了傳送 '${drink._id}' (有引號)
                 col.innerHTML = `
-            <div class="card 特調酒卡" onclick="顯示詳細資訊('${drink._id}')">
-                <div style="position: relative;">
-                    <img src="${drink.img}" class="card-img-top" alt="${drink.name}">
-                    <div class="愛心按鈕 ${愛心Class}" onclick="切換收藏狀態('${drink._id}', event)" id="card-heart-${drink._id}">
-                        <i class="bi ${愛心Icon} 愛心圖示"></i>
+                <div class="card 特調酒卡">
+                    <div class="position-relative">
+                        <img src="${drink.img || 'https://via.placeholder.com/300x400?text=No+Image'}" class="card-img-top" alt="${drink.name}">
+                        <!-- 愛心按鈕 -->
+                        <div class="愛心按鈕 ${heartClass}" onclick="event.stopPropagation(); 點擊收藏('${drink._id}', this)">
+                            <i class="bi ${heartIcon} 愛心圖示"></i>
+                        </div>
+                    </div>
+                    <div class="card-body" onclick="開啟詳情(${drink.id})">
+                        <h5 class="card-title">${drink.name}</h5>
+                        <p class="卡片資訊小字 mb-0">${drink.abvDisplay || ''} · ${drink.taste || ''}</p>
                     </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">${drink.name}</h5>
-                    <div class="卡片資訊小字">
-                        <span>${顯示基酒}</span> | <span>${drink.abvDisplay}</span>
-                    </div>
-                </div>
-            </div>
-        `;
+                `;
                 網格容器.appendChild(col);
             });
-
-            // 更新按鈕狀態
-            const 上一頁鈕 = document.getElementById('分頁-上一頁');
-            const 下一頁鈕 = document.getElementById('分頁-下一頁');
-            if (上一頁鈕) 上一頁鈕.disabled = (當前頁碼 === 1);
-            if (下一頁鈕) 下一頁鈕.disabled = (當前頁碼 === 總頁數);
         }
+
+        // ==========================================
+        // 💳 贊助支持系統 (Stripe 前端雙重驗證)
+        // ==========================================
+
+        // 1. 切換側邊欄的 UI 介面
+        // 1. 切換側邊欄的 UI 介面 (加入登入攔截)
+        function 切換贊助介面(要顯示) {
+            if (要顯示) {
+                // 🔥 攔截點：檢查是否有登入
+                const token = localStorage.getItem('tipsy_token');
+                if (!token) {
+                    // 沒登入：關閉側邊欄 -> 顯示提示 -> 彈出登入框
+                    bootstrap.Offcanvas.getInstance(document.getElementById('側邊選單本體')).hide();
+                    alert("感謝支持！請先登入，讓我們為您的帳號掛上專屬乾爹勳章 🥃");
+                    new bootstrap.Modal(document.getElementById('登入彈窗')).show();
+                    return; // 終止後續動作，不切換畫面
+                }
+            }
+
+            // 已登入或準備關閉：執行原有的切換邏輯
+            const 選單區段 = document.querySelector('#側邊選單本體 > .offcanvas-body:not(#贊助介面)');
+            const 贊助區段 = document.getElementById('贊助介面');
+
+            if (要顯示) {
+                選單區段.style.display = 'none';
+                贊助區段.style.display = 'block';
+            } else {
+                選單區段.style.display = 'block';
+                贊助區段.style.display = 'none';
+                document.getElementById('自訂贊助金額').value = ''; // 清空輸入框
+            }
+        }
+
+        // 2. 獲取自訂金額並驗證
+        function 提交自訂贊助() {
+            const 輸入值 = document.getElementById('自訂贊助金額').value;
+            const amount = Number(輸入值);
+
+            // 前端安全性與格式阻擋：
+            if (!輸入值) {
+                顯示通知("❌ 請輸入贊助金額！");
+                return;
+            }
+            if (Number.isNaN(amount)) {
+                顯示通知("❌ 金額格式不正確！");
+                return;
+            }
+            // 阻擋小數點 (強制轉整數或直接擋下)
+            if (!Number.isInteger(amount)) {
+                顯示通知("❌ 贊助金額必須為整數！不支援小數點。");
+                return;
+            }
+            if (amount < 50) {
+                顯示通知("❌ 系統限制：贊助金額最低為 NTD 50。");
+                return;
+            }
+            if (amount > 100000) {
+                顯示通知("❌ 單筆上限為 NTD 100,000，感謝土豪厚愛！");
+                return;
+            }
+
+            執行贊助(amount);
+        }
+
+        // 3. 發送 API 請求給後端建立 Stripe Session
+        async function 執行贊助(amount) {
+            // 先檢查是否登入
+            const token = localStorage.getItem('tipsy_token');
+            if (!token) {
+                alert("🍹 感謝您的心意！請先登入會員以進行贊助。");
+                切換贊助介面(false); // 關閉贊助區
+                bootstrap.Offcanvas.getInstance(document.getElementById('側邊選單本體')).hide(); // 關閉側邊欄
+                new bootstrap.Modal(document.getElementById('登入彈窗')).show(); // 跳出登入框
+                return;
+            }
+
+            顯示通知("⏳ 正在建立安全支付連結...");
+
+            try {
+                const res = await fetch(`${API_URL}/create-checkout-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ amount })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success && data.url) {
+                    // 核心步驟：將網頁導向 Stripe 結帳頁面
+                    window.location.href = data.url;
+                } else {
+                    顯示通知(`❌ 建立失敗：${data.message}`);
+                }
+            } catch (err) {
+                console.error("贊助請求錯誤", err);
+                顯示通知("❌ 金流服務無法連線，請稍後再試。");
+            }
+        }
+
+        // 4. 解析網址參數 (如果付款成功跳回來會帶有 ?success=true)
+        function 檢查付款結果() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success')) {
+                // 等 DOM 載入後再顯示通知
+                setTimeout(() => {
+                    顯示通知("🎉 贊助成功！非常感謝您的熱情支持，敬一杯！🥂");
+                    // 清除網址參數，保持乾淨
+                    window.history.replaceState(null, '', window.location.pathname);
+                }, 1000);
+            }
+            if (urlParams.get('canceled')) {
+                setTimeout(() => {
+                    顯示通知("ℹ️ 贊助已取消。歡迎下次再來圖書館逛逛！");
+                    window.history.replaceState(null, '', window.location.pathname);
+                }, 1000);
+            }
+        }
+
+        // 在 window.onload 中加入這個檢查
+        const originalOnload = window.onload;
+        window.onload = async function () {
+            if (originalOnload) originalOnload();
+            檢查付款結果();
+        };
 
         // 2. 切換收藏狀態 (API)
         async function 切換收藏狀態(id, event) {
