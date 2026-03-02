@@ -810,6 +810,68 @@
             /* 這裡給它 20vh 的空間，保證最後一個按鈕一定滑得出來 */
             padding-bottom: 20vh !important;
         }
+
+        /* --- 新增：材料晶片與抽屜樣式 --- */
+        .材料晶片 {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            color: #c5a059;
+            padding: 4px 12px;
+            border-radius: 15px;
+            margin: 0 6px 8px 0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .材料晶片:hover {
+            background: rgba(197, 160, 89, 0.2);
+            border-color: #c5a059;
+            transform: translateY(-2px);
+        }
+
+        .材料索引抽屜 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--奢華金色);
+            border-radius: 16px 16px 0 0;
+            z-index: 1070;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+            padding: 20px;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+            max-height: 80%;
+            overflow-y: auto;
+            visibility: hidden;
+        }
+
+        .材料索引抽屜.開啟 {
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            body.抽屜開啟 {
+                overflow: hidden;
+            }
+
+            .材料索引抽屜 {
+                padding-bottom: 12vh;
+            }
+        }
+
+        .抽屜把手 {
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            margin: 0 auto 15px auto;
+        }
     </style>
 </head>
 
@@ -1113,6 +1175,32 @@
                         <i class="bi bi-shuffle me-2"></i> 沒感覺？隨機再抽一杯
                     </button>
                 </div>
+
+                <!--材料索引抽屜-->
+                <div id="材料百科抽屜" class="材料索引抽屜">
+                    <div class="抽屜把手"></div>
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary pb-2">
+                        <h5 class="金色文字 mb-0" id="材料標題">材料名稱</h5>
+                        <button type="button" class="btn-close btn-close-white" onclick="關閉材料索引()"></button>
+                    </div>
+
+                    <div id="材料內容區段">
+                        <!-- 動態內容載入區 -->
+                    </div>
+
+                    <div class="mt-4 border-top border-secondary pt-3">
+                        <small class="text-white-50 d-block mb-2"><i class="bi bi-shop me-1"></i> 快速尋找通路</small>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light" onclick="搜尋通路('7-11', event)"><i
+                                    class="bi bi-geo-alt"></i> 7-11</button>
+                            <button class="btn btn-sm btn-outline-light" onclick="搜尋通路('全家', event)"><i
+                                    class="bi bi-geo-alt"></i> 全家</button>
+                            <button class="btn btn-sm btn-outline-light" onclick="搜尋通路('全聯', event)"><i
+                                    class="bi bi-geo-alt"></i> 全聯</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1389,9 +1477,9 @@
         // ==========================================
 
         // 1. 設定後端 API 網址 (目前設定為連線到你本地端)
-        // const API_URL = "http://localhost:3000/api";
+        const API_URL = "http://localhost:3000/api";
         // 如果要連線到雲端，請把上面那行註解掉，改用下面這行：
-        const API_URL = "https://tipsy-server.onrender.com/api";
+        /* const API_URL = "https://tipsy-server.onrender.com/api"; */
 
         // 2. 資料庫與狀態變數
         let cocktails = [];        // 存放從後端抓回來的酒單
@@ -1660,7 +1748,7 @@
                 const heartClass = isCollected ? '已收藏' : '';
                 const heartIcon = isCollected ? 'bi-heart-fill text-danger' : 'bi-heart';
 
-               col.innerHTML = `
+                col.innerHTML = `
                 <div class="card 特調酒卡" onclick="顯示詳細資訊('${drink._id}')">
                     <div class="position-relative">
                         <img src="${drink.img || 'https://via.placeholder.com/300x400?text=No+Image'}" class="card-img-top" alt="${drink.name}">
@@ -1806,8 +1894,8 @@
             檢查付款結果();
         };
 
-      // 2. 切換收藏狀態 (API)
-        
+        // 2. 切換收藏狀態 (API)
+
         async function 切換收藏狀態(id, event) {
             // 確保有傳入 event 才阻擋冒泡，避免直接呼叫時報錯
             if (event) event.stopPropagation();
@@ -1828,7 +1916,7 @@
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                
+
                 // 嘗試解析後端回傳的 JSON 資料 (如果伺服器死機回傳 HTML，這裡會失敗但不會當掉)
                 const data = await res.json().catch(() => null);
 
@@ -1836,7 +1924,7 @@
                 if (!res.ok) {
                     const errorMsg = data && data.message ? data.message : `伺服器狀態碼 ${res.status}`;
                     alert(`【系統攔截】${errorMsg}`);
-                    
+
                     // 如果是 Token 過期或無效，自動幫使用者登出並重整
                     if (res.status === 401) {
                         處理登出();
@@ -1868,7 +1956,7 @@
             }
         }
 
-        
+
 
         // 3. 更新 UI 上的愛心圖示
         function 更新UI狀態(id, isFav) {
@@ -1921,7 +2009,14 @@
             document.getElementById('彈窗-基酒').innerText = modalBase;
             document.getElementById('彈窗-濃度').innerText = drink.abvDisplay;
             document.getElementById('彈窗-口感').innerText = drink.taste;
-            document.getElementById('彈窗-材料列表').innerText = drink.ingredients;
+
+            // 處理材料字串，轉換為晶片
+            const 材料陣列 = drink.ingredients.split(',').map(item => item.trim()).filter(item => item !== '');
+            const 材料HTML = 材料陣列.map(item =>
+                `<span class="材料晶片" onclick="開啟材料索引('${item}', event)">${item}</span>`
+            ).join('');
+            document.getElementById('彈窗-材料列表').innerHTML = 材料HTML;
+
             document.getElementById('彈窗-故事文字').innerText = drink.story;
 
             // 渲染步驟
@@ -1968,8 +2063,84 @@
             const 重抽按鈕 = document.getElementById('單抽重選按鈕');
             if (重抽按鈕) 重抽按鈕.style.display = isRandom ? 'block' : 'none';
 
+            關閉材料索引(); // 確保打開新酒卡時抽屜是關閉的
+
             切換卡片內容Tab('故事');
             我的彈窗.show();
+        }
+
+        // 材料抽屜邏輯
+        async function 開啟材料索引(name, event) {
+            event.stopPropagation();
+
+            const 抽屜 = document.getElementById('材料百科抽屜');
+            const 標題 = document.getElementById('材料標題');
+            const 內容區 = document.getElementById('材料內容區段');
+
+            標題.innerText = name;
+            內容區.innerHTML = `
+                <div class="text-center p-4">
+                    <div class="spinner-border text-warning" role="status"></div>
+                    <p class="text-white-50 mt-2 mb-0">正在查閱館藏...</p>
+                </div>
+            `;
+
+            document.body.classList.add('抽屜開啟');
+            抽屜.classList.add('開啟');
+
+            try {
+                const res = await fetch(`${API_URL}/materials/${encodeURIComponent(name)}`);
+                const data = await res.json().catch(() => null);
+
+                if (!res.ok) {
+                    const errorMsg = data && data.message ? data.message : `查無資料 (${res.status})`;
+                    alert(`【系統提示】${errorMsg}`);
+
+                    內容區.innerHTML = `
+                        <div class="text-center p-4">
+                            <i class="bi bi-box-seam text-secondary" style="font-size: 2rem;"></i>
+                            <p class="text-white-50 mt-2 mb-0">此材料正在館藏編入中...</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (data && data.success && data.material) {
+                    const material = data.material;
+                    內容區.innerHTML = `
+                        <div class="p-3 mb-2 rounded" style="background: rgba(255,255,255,0.05); border-left: 3px solid var(--奢華金色);">
+                            <h6 class="text-white mb-1">${material.brand || name}</h6>
+                            <p class="text-white-50 mb-2" style="font-size: 0.9rem;">${material.desc || ''}</p>
+                            <span class="badge bg-dark border border-secondary text-light">預估價格: ${material.price || '店洽'}</span>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                console.error("查閱材料失敗:", err);
+                alert("【連線失敗】請確認網路正常，或後端伺服器未開啟！");
+                內容區.innerHTML = `
+                    <div class="text-center p-4">
+                        <i class="bi bi-wifi-off text-danger" style="font-size: 2rem;"></i>
+                        <p class="text-white-50 mt-2 mb-0">無法連線到圖書館資料庫</p>
+                    </div>
+                `;
+            }
+        }
+
+        function 關閉材料索引(event) {
+            if (event) event.stopPropagation();
+            const 抽屜 = document.getElementById('材料百科抽屜');
+            if (抽屜) {
+                抽屜.classList.remove('開啟');
+                document.body.classList.remove('抽屜開啟');
+            }
+        }
+
+        function 搜尋通路(通路名, event) {
+            event.stopPropagation();
+            const 材料名 = document.getElementById('材料標題').innerText;
+            const query = encodeURIComponent(`附近 ${通路名} ${材料名}`);
+            window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
         }
 
         // 2. 切換故事/步驟

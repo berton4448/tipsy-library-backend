@@ -450,6 +450,16 @@ const cocktailSchema = new mongoose.Schema({
 
 const Cocktail = mongoose.model('Cocktail', cocktailSchema);
 
+const materialSchema = new mongoose.Schema({
+    name: { type: String, required: true, index: true },
+    brand: String,
+    price: String,
+    desc: String,
+    stores: [String]
+});
+
+const Material = mongoose.model('Material', materialSchema);
+
 app.get('/', (req, res) => {
     res.send('<h1>微醺圖書館後端 - 資料庫連線版 🍸</h1>');
 });
@@ -463,15 +473,31 @@ app.get('/api/cocktails', async (req, res) => {
     }
 });
 
+app.get('/api/materials/:name', async (req, res) => {
+    try {
+        const materialName = req.params.name;
+        // 使用正則表達式進行模糊比對
+        const material = await Material.findOne({ name: { $regex: materialName, $options: 'i' } });
+
+        if (!material) {
+            return res.status(404).json({ success: false, message: '此材料正在館藏編入中...' });
+        }
+        res.status(200).json({ success: true, material });
+    } catch (error) {
+        console.error("獲取材料失敗:", error);
+        res.status(500).json({ success: false, message: "伺服器錯誤" });
+    }
+});
+
 
 // [收藏/取消收藏 API] POST /api/cocktails/:id/collect
 // 💡 注意：這裡加了 auth，代表只有登入的人才能按收藏
 app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
     try {
-        const cocktailId = req.params.id; 
-        
+        const cocktailId = req.params.id;
+
         // 修正這裡：同時支援 req.user._id 或 req.user.id，避免 undefined
-        const userId = req.user._id || req.user.id; 
+        const userId = req.user._id || req.user.id;
 
         if (!userId) {
             return res.status(401).json({ success: false, message: '無法識別使用者身分，請重新登入' });
@@ -494,10 +520,10 @@ app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
         if (isCollected) {
             // A. 如果已經收藏 -> 移除 (過濾掉相同的 ID)
             user.favorites = user.favorites.filter(favId => favId.toString() !== cocktailIdStr);
-            
+
             // 💡 關鍵：加上 validateBeforeSave: false，避免其他無關欄位阻擋儲存
             await user.save({ validateBeforeSave: false });
-            
+
             return res.status(200).json({
                 success: true,
                 message: '已移除收藏',
@@ -506,10 +532,10 @@ app.post('/api/cocktails/:id/collect', auth, async (req, res) => {
         } else {
             // B. 如果還沒收藏 -> 加入
             user.favorites.push(cocktailIdStr);
-            
+
             // 💡 關鍵：同樣加上 validateBeforeSave: false
             await user.save({ validateBeforeSave: false });
-            
+
             return res.status(200).json({
                 success: true,
                 message: '已加入收藏 ❤️',
@@ -592,6 +618,30 @@ app.delete('/api/admin/cocktails/:id', auth, adminAuth, async (req, res) => {
     } catch (error) {
         console.error("【刪除酒譜】錯誤:", error);
         res.status(500).json({ success: false, message: '刪除失敗，伺服器發生錯誤' });
+    }
+});
+
+// 4. [新增/更新食材] POST /api/admin/materials
+app.post('/api/admin/materials', auth, adminAuth, async (req, res) => {
+    try {
+        const { name, brand, price, desc, stores } = req.body;
+        if (!name) return res.status(400).json({ success: false, message: "請提供材料名稱" });
+
+        let material = await Material.findOne({ name });
+        if (material) {
+            material.brand = brand !== undefined ? brand : material.brand;
+            material.price = price !== undefined ? price : material.price;
+            material.desc = desc !== undefined ? desc : material.desc;
+            material.stores = stores !== undefined ? stores : material.stores;
+        } else {
+            material = new Material({ name, brand, price, desc, stores });
+        }
+
+        await material.save({ validateBeforeSave: false });
+        res.status(200).json({ success: true, message: '材料更新成功！', material });
+    } catch (error) {
+        console.error("【更新材料】錯誤:", error);
+        res.status(500).json({ success: false, message: '更新失敗，伺服器發生錯誤' });
     }
 });
 
