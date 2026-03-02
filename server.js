@@ -455,7 +455,8 @@ const materialSchema = new mongoose.Schema({
     brand: String,
     price: String,
     desc: String,
-    stores: [String]
+    stores: [String],
+    img: String
 });
 
 const Material = mongoose.model('Material', materialSchema);
@@ -624,7 +625,7 @@ app.delete('/api/admin/cocktails/:id', auth, adminAuth, async (req, res) => {
 // 4. [新增/更新食材] POST /api/admin/materials
 app.post('/api/admin/materials', auth, adminAuth, async (req, res) => {
     try {
-        const { name, brand, price, desc, stores } = req.body;
+        const { name, brand, price, desc, stores, img } = req.body;
         if (!name) return res.status(400).json({ success: false, message: "請提供材料名稱" });
 
         let material = await Material.findOne({ name });
@@ -633,8 +634,9 @@ app.post('/api/admin/materials', auth, adminAuth, async (req, res) => {
             material.price = price !== undefined ? price : material.price;
             material.desc = desc !== undefined ? desc : material.desc;
             material.stores = stores !== undefined ? stores : material.stores;
+            material.img = img !== undefined ? img : material.img;
         } else {
-            material = new Material({ name, brand, price, desc, stores });
+            material = new Material({ name, brand, price, desc, stores, img });
         }
 
         await material.save({ validateBeforeSave: false });

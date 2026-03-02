@@ -205,8 +205,10 @@
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label text-white-50">材料名稱 <span class="text-danger">*</span></label>
-              <input type="text" id="mat-name" class="form-control 毛玻璃輸入框 bg-dark text-light border-secondary"
-                placeholder="例如：伏特加" required>
+              <select id="mat-name" class="form-select 毛玻璃輸入框 text-white" required>
+                <!-- 由 JS 動態載入選項 -->
+                <option value="" disabled selected>請選擇材料...</option>
+              </select>
             </div>
             <div class="col-md-6">
               <label class="form-label text-white-50">推薦品牌/副標題</label>
@@ -214,14 +216,44 @@
                 placeholder="例如：無色無味的純粹">
             </div>
             <div class="col-md-6">
-              <label class="form-label text-white-50">預估價格</label>
-              <input type="text" id="mat-price" class="form-control 毛玻璃輸入框 bg-dark text-light border-secondary"
-                placeholder="例如：NT$ 400-800">
+              <label class="form-label text-white-50">預估價格區間 (最低)</label>
+              <input type="number" id="mat-price-min" class="form-control 毛玻璃輸入框 bg-dark text-light border-secondary"
+                placeholder="NT$">
             </div>
             <div class="col-md-6">
-              <label class="form-label text-white-50">通路選項 (以逗號分隔)</label>
-              <input type="text" id="mat-stores" class="form-control 毛玻璃輸入框 bg-dark text-light border-secondary"
-                placeholder="例如：7-11, 全家, 全聯, 買酒網">
+              <label class="form-label text-white-50">預估價格區間 (最高)</label>
+              <input type="number" id="mat-price-max" class="form-control 毛玻璃輸入框 bg-dark text-light border-secondary"
+                placeholder="NT$">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label text-white-50">材料圖片網址 (Image URL)</label>
+              <input type="text" id="mat-img" class="form-control 毛玻璃輸入框 bg-dark text-light border-secondary"
+                placeholder="https://...">
+            </div>
+            <div class="col-12">
+              <label class="form-label text-white-50">通路選項</label>
+              <div class="d-flex flex-wrap gap-3 mt-1">
+                <div class="form-check">
+                  <input class="form-check-input store-checkbox" type="checkbox" value="統一超商 (7-11)" id="store-711">
+                  <label class="form-check-label text-white" for="store-711">統一超商 (7-11)</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input store-checkbox" type="checkbox" value="全家便利商店" id="store-family">
+                  <label class="form-check-label text-white" for="store-family">全家便利商店</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input store-checkbox" type="checkbox" value="萊爾富" id="store-hilife">
+                  <label class="form-check-label text-white" for="store-hilife">萊爾富 (Hi-Life)</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input store-checkbox" type="checkbox" value="美廉社" id="store-simple">
+                  <label class="form-check-label text-white" for="store-simple">美廉社</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input store-checkbox" type="checkbox" value="全聯福利中心" id="store-pxmart">
+                  <label class="form-check-label text-white" for="store-pxmart">全聯福利中心</label>
+                </div>
+              </div>
             </div>
             <div class="col-12">
               <label class="form-label text-white-50">材料描述</label>
@@ -408,6 +440,7 @@
         const res = await fetch(`${API_URL}/cocktails`);
         所有酒譜 = await res.json();
         渲染列表(所有酒譜);
+        初始化材料下拉選單(所有酒譜);
       } catch (err) {
         console.error("載入失敗", err);
         顯示通知("資料連線異常");
@@ -621,6 +654,151 @@
         box.style.opacity = '0';
       }, 3000); // 3 秒後漸漸消失
     }
+
+    // ==========================================
+    // 🧱 新增/管理材料庫邏輯
+    // ==========================================
+
+    function 初始化材料下拉選單(cocktails) {
+      const matSelect = document.getElementById('mat-name');
+      if (!matSelect) return;
+
+      const allIngredients = new Set();
+      cocktails.forEach(c => {
+        if (!c.ingredients) return;
+        const parts = c.ingredients.split(',');
+        parts.forEach(p => {
+          const trimmed = p.trim();
+          if (trimmed) allIngredients.add(trimmed);
+        });
+      });
+
+      matSelect.innerHTML = '<option value="" disabled selected>請選擇材料...</option>';
+
+      const sortedIngredients = Array.from(allIngredients).sort();
+      sortedIngredients.forEach(ing => {
+        const option = document.createElement('option');
+        option.value = ing;
+        option.style.color = "black";
+        option.textContent = ing;
+        matSelect.appendChild(option);
+      });
+    }
+
+    document.getElementById('mat-name')?.addEventListener('change', async function () {
+      const selectedName = this.value;
+      if (!selectedName) return;
+
+      document.getElementById('mat-brand').value = '';
+      document.getElementById('mat-price-min').value = '';
+      document.getElementById('mat-price-max').value = '';
+      document.getElementById('mat-desc').value = '';
+      document.getElementById('mat-img').value = '';
+      document.querySelectorAll('.store-checkbox').forEach(cb => cb.checked = false);
+
+      try {
+        const res = await fetch(`https://tipsy-server.onrender.com/api/materials/${encodeURIComponent(selectedName)}`);
+        const data = await res.json().catch(() => null);
+
+        if (res.ok && data && data.success && data.material) {
+          const mat = data.material;
+          if (mat.brand) document.getElementById('mat-brand').value = mat.brand;
+          if (mat.desc) document.getElementById('mat-desc').value = mat.desc;
+          if (mat.img) document.getElementById('mat-img').value = mat.img;
+
+          if (mat.price) {
+            const priceMatch = mat.price.match(/NT\$\s*(\d+)\s*-\s*(\d+)/i);
+            if (priceMatch) {
+              document.getElementById('mat-price-min').value = priceMatch[1];
+              document.getElementById('mat-price-max').value = priceMatch[2];
+            } else {
+              const nums = mat.price.match(/\d+/g);
+              if (nums && nums.length > 0) {
+                document.getElementById('mat-price-min').value = nums[0];
+                if (nums.length > 1) document.getElementById('mat-price-max').value = nums[1];
+              }
+            }
+          }
+
+          if (mat.stores && Array.isArray(mat.stores)) {
+            document.querySelectorAll('.store-checkbox').forEach(cb => {
+              if (mat.stores.includes(cb.value) || mat.stores.some(s => s.includes(cb.value) || cb.value.includes(s))) {
+                cb.checked = true;
+              }
+            });
+          }
+        }
+      } catch (err) {
+        console.warn("無法取得預設材料資料或該材料尚未編入:", err);
+      }
+    });
+
+    document.getElementById('material-manage-form')?.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const token = localStorage.getItem('tipsy_token');
+      if (!token) {
+        alert("【拒絕存取】請先以管理員身分登入！");
+        return;
+      }
+
+      const name = document.getElementById('mat-name').value;
+      if (!name) {
+        alert("請選擇材料名稱！");
+        return;
+      }
+
+      const brand = document.getElementById('mat-brand').value.trim();
+      const priceMin = document.getElementById('mat-price-min').value.trim();
+      const priceMax = document.getElementById('mat-price-max').value.trim();
+      const desc = document.getElementById('mat-desc').value.trim();
+      const img = document.getElementById('mat-img').value.trim();
+
+      let price = '';
+      if (priceMin && priceMax) {
+        price = `NT$ ${priceMin}-${priceMax}`;
+      } else if (priceMin) {
+        price = `NT$ ${priceMin}`;
+      }
+
+      const stores = [];
+      document.querySelectorAll('.store-checkbox').forEach(cb => {
+        if (cb.checked) stores.push(cb.value);
+      });
+
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> 提交中...';
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch(`https://tipsy-server.onrender.com/api/admin/materials`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ name, brand, price, desc, stores, img })
+        });
+
+        const data = await res.json().catch(() => null);
+
+        if (!res.ok) {
+          alert(`❌ 儲存失敗：${data ? data.message : '伺服器異常'}`);
+          return;
+        }
+
+        if (data && data.success) {
+          顯示通知("✅ 材料資料庫更新成功！");
+        }
+      } catch (err) {
+        console.error("更新材料 API 發生錯誤:", err);
+        alert("【網路錯誤】無法與伺服器連線，請確認後端是否運行中。");
+      } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
+    });
   </script>
 </body>
 
